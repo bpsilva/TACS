@@ -1,0 +1,9 @@
+word a: 35;
+word g: 5;
+
+word foo(word p, byte b)
+{
+
+}
+
+
