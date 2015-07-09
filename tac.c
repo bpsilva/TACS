@@ -265,8 +265,6 @@ switch(node->type)
 		
 			break;
 		case SYMBOL_IDENTIFIER: 
-
-		
 			break;
 		case KW_IF: 
 
@@ -279,7 +277,17 @@ switch(node->type)
 			break;
 		case KW_LOOP:
 
-			break; 
+			break;
+		case EXP_ADD:
+			tac_create(TAC_ADD, insert("1", 0 , 0), node->sons[0]->symbol, node->sons[0]->symbol);
+		break;
+		case EXP_SUB:
+		case EXP_MUL:
+		case EXP_DIV:
+		case EXP_MORE:
+		case EXP_LESS:
+	
+
 	}
 
 return 0;
