@@ -87,10 +87,18 @@ switch(node->type)
 
 		case FUNC_BODY:	
 
-			return tac_unify
-				(
-					tac_tree_tac(node->sons[0]),
-					tac_create(TAC_ENDFUN, 0,0, 0)
+			aux = tac_unify(
+					tac_tree_tac(node->sons[0]), //param
+					tac_tree_tac(node->sons[1])	// local def
+				);
+
+			aux = tac_unify( 
+				aux,	
+				tac_tree_tac(node->sons[2])// command block
+				); 
+			return tac_unify(
+				aux,
+				tac_create(TAC_ENDFUN, 0,0, 0)
 				);
 
 		case GLOBAL_VAR_DEF_INIT:
@@ -109,7 +117,17 @@ switch(node->type)
 				);
 		
 		case GLOBAL_VAR_DEF_PTR:
-		
+				aux = tac_unify(
+
+					tac_create(TAC_VAR_DEF, 0, 0, node->sons[1]->symbol),	
+					tac_create(TAC_MOVE, 0, node->sons[2]->symbol , node->sons[1]->symbol)
+				);
+			
+			return
+				tac_unify(
+					aux,	
+					tac_tree_tac(node->sons[3])
+				);
 			break;
 		case GLOBAL_VAR_DEF_VEC : 
 			
@@ -141,38 +159,63 @@ switch(node->type)
 		case SYMBOL_LIT_SEQ : 
 
 		break;
-		case PARAM : 
+		case PARAM :
+
+			aux = tac_unify(
+					tac_create(TAC_VAR_DEF, 0, 0, node->sons[1]->symbol),
+					tac_create(TAC_PARAM, 0, 0, node->sons[1]->symbol)
+					);
+
 			return tac_unify(
-					tac_create(TAC_PARAM, 0, 0, node->sons[1]->symbol),
+					aux,
 					tac_tree_tac(node->sons[2])
 					);
 
 		case PARAM_SEQ : 
-			return tac_unify(
-					tac_create(TAC_PARAM, 0, 0, node->sons[1]->symbol),
-					tac_tree_tac(node->sons[2])
+			aux = tac_unify(
+					tac_create(TAC_VAR_DEF, 0, 0, node->sons[1]->symbol),
+					tac_create(TAC_PARAM, 0, 0, node->sons[1]->symbol)
 					);
 
-		break;
+			return tac_unify(
+					aux,
+					tac_tree_tac(node->sons[2])
+					);
 		case LOCAL_VAR_DEF : 
+				return tac_unify(
+					tac_create(TAC_VAR_DEF, 0, 0, node->sons[1]->symbol),
+					tac_create(TAC_MOVE, 0, node->sons[2]->symbol, node->sons[1]->symbol)
+					);
 
-		break;
+			
 		case LOCAL_VAR_DEF_LIST : 
-		
+		return tac_unify(
+				tac_tree_tac(node->sons[0]),
+				tac_tree_tac(node->sons[1])
+				);
 
-		break;
+
 		case LOCAL_VAR_DEF_PTR: 
-
-			break;
+			return tac_unify(
+					tac_create(TAC_VAR_DEF_PTR, 0, 0, node->sons[1]->symbol),
+					tac_create(TAC_MOVE, 0, node->sons[2]->symbol, node->sons[1]->symbol)
+					);
 		case CMD_LIST : 
-
-			break;
+			return tac_tree_tac(node->sons[0]);
+			
 		case CMDS :
-
-			break;
-		case PRE_INC : 
-
-			break;
+				
+			
+				
+			return tac_unify(
+				tac_tree_tac(node->sons[0]),
+				tac_tree_tac(node->sons[1])
+				);
+		case PRE_INC: 
+				printf("PREINC\n");
+				
+			return tac_create(TAC_ADD, insert("1", 0 , 0), node->sons[0]->symbol, node->sons[0]->symbol);//////////////
+			
 		case POST_INC: 
 
 			break;
