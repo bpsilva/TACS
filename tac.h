@@ -34,7 +34,7 @@ TAC* tac_tree_tac(astree_node *node);
 /*
 #define TAC_SYMBOL	
 	
-#define TAC_ADD	
+	
 #define TAC_MUL	
 #define TAC_LABEL	
 

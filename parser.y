@@ -128,15 +128,8 @@ atrib:
 
 
 expression:
-	expression op expression			{$$ = astcreate($2,0,$1,$3,0,0);}
-	//|expression '-'expression			{$$ = astcreate(EXP_SUB,0,$1,$3,0,0);}
-	//|expression '*' expression			{$$ = astcreate(EXP_MUL,0,$1,$3,0,0);}
-	//|expression '/' expression			{$$ = astcreate(EXP_DIV,0,$1,$3,0,0);}
-	//|expression '>' expression 			{$$ = astcreate(EXP_MORE,0,$1,$3,0,0);}
-	//|expression OPERATOR_LE expression 			{$$ = astcreate(OPERATOR_LE,0,$1,$3,0,0);}
-	//|expression '<' expression 			{$$ = astcreate(EXP_LESS,0,$1,$3,0,0);}
-	//|expression "||" expression 			{$$ = astcreate(EXP_OR,0,$1,$3,0,0);}
-	//|expression "&&" expression 			{$$ = astcreate(EXP_AND,0,$1,$3,0,0);}
+	'(' expression ')'					{$$ = $2;}
+	|expression op expression			{$$ = astcreate($2,0,$1,$3,0,0);}
 	|SYMBOL_IDENTIFIER '[' expression ']' 		{$$ = astcreate(EXP_ARRAY_ACCESS,0,astcreate(SYMBOL_IDENTIFIER,$1,0,0,0,0),$3,0,0);}
 	|SYMBOL_IDENTIFIER				{$$ = astcreate(SYMBOL_IDENTIFIER,$1,0,0,0,0);}
 	|value						{$$ = $1;}
@@ -265,11 +258,7 @@ int main(int argc, char **argv)
 		fprintf( stderr, "Semantic error.\n");
 		exit(4);
 	}
-
-	
 	tac_print_list(tac_tree_tac(astree));
-
-
 
 }
 

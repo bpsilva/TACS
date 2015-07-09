@@ -11,8 +11,8 @@ Terminais não utilizados na gramática
    SYMBOL_LIT_FLOATING
 
 
-Estado 120 conflitos: 12 de deslocamento/redução
-Estado 135 conflitos: 1 de deslocamento/redução
+Estado 123 conflitos: 12 de deslocamento/redução
+Estado 138 conflitos: 1 de deslocamento/redução
 
 
 Gramática
@@ -49,119 +49,120 @@ Gramática
    21      | SYMBOL_IDENTIFIER '=' expression
    22      | SYMBOL_IDENTIFIER '[' expression ']' '=' expression
 
-   23 expression: expression op expression
-   24           | SYMBOL_IDENTIFIER '[' expression ']'
-   25           | SYMBOL_IDENTIFIER
-   26           | value
-   27           | SYMBOL_IDENTIFIER '(' arg ')'
-   28           | '&' SYMBOL_IDENTIFIER
-   29           | '$' SYMBOL_IDENTIFIER
+   23 expression: '(' expression ')'
+   24           | expression op expression
+   25           | SYMBOL_IDENTIFIER '[' expression ']'
+   26           | SYMBOL_IDENTIFIER
+   27           | value
+   28           | SYMBOL_IDENTIFIER '(' arg ')'
+   29           | '&' SYMBOL_IDENTIFIER
+   30           | '$' SYMBOL_IDENTIFIER
 
-   30 op: '+'
-   31   | '-'
-   32   | '*'
-   33   | '/'
-   34   | '>'
-   35   | '<'
-   36   | OPERATOR_EQ
-   37   | OPERATOR_GE
-   38   | OPERATOR_LE
-   39   | OPERATOR_OR
-   40   | OPERATOR_AND
-   41   | OPERATOR_NE
+   31 op: '+'
+   32   | '-'
+   33   | '*'
+   34   | '/'
+   35   | '>'
+   36   | '<'
+   37   | OPERATOR_EQ
+   38   | OPERATOR_GE
+   39   | OPERATOR_LE
+   40   | OPERATOR_OR
+   41   | OPERATOR_AND
+   42   | OPERATOR_NE
 
-   42 arg: /* vazio */
-   43    | value ',' arg
-   44    | SYMBOL_IDENTIFIER ',' arg
-   45    | SYMBOL_IDENTIFIER
-   46    | value
+   43 arg: /* vazio */
+   44    | value ',' arg
+   45    | SYMBOL_IDENTIFIER ',' arg
+   46    | SYMBOL_IDENTIFIER
+   47    | value
 
-   47 value: SYMBOL_LIT_INTEGER
-   48      | SYMBOL_LIT_FALSE
-   49      | SYMBOL_LIT_TRUE
-   50      | SYMBOL_LIT_CHAR
-   51      | SYMBOL_LIT_STRING
+   48 value: SYMBOL_LIT_INTEGER
+   49      | SYMBOL_LIT_FALSE
+   50      | SYMBOL_LIT_TRUE
+   51      | SYMBOL_LIT_CHAR
+   52      | SYMBOL_LIT_STRING
 
-   52 output_rest: /* vazio */
-   53            | ',' expression output_rest
+   53 output_rest: /* vazio */
+   54            | ',' expression output_rest
 
-   54 flux_control: KW_IF '(' expression ')' then
-   55             | KW_LOOP '(' simple_command ';' expression ';' simple_command ')' command_list
+   55 flux_control: KW_IF '(' expression ')' then
+   56             | KW_LOOP '(' simple_command ';' expression ';' simple_command ')' command_list
 
-   56 then: KW_THEN option else
+   57 then: KW_THEN option else
 
-   57 else: /* vazio */
-   58     | KW_ELSE option
+   58 else: /* vazio */
+   59     | KW_ELSE option
 
-   59 option: command_list
-   60       | simple_command
+   60 option: command_list
+   61       | simple_command
 
-   61 local_var_def_list: /* vazio */
-   62                   | local_var_def local_var_def_list
+   62 local_var_def_list: /* vazio */
+   63                   | local_var_def local_var_def_list
 
-   63 local_var_def: type SYMBOL_IDENTIFIER ':' value ';'
-   64              | type '$' SYMBOL_IDENTIFIER ':' value ';'
+   64 local_var_def: type SYMBOL_IDENTIFIER ':' value ';'
+   65              | type '$' SYMBOL_IDENTIFIER ':' value ';'
 
-   65 param: /* vazio */
-   66      | type SYMBOL_IDENTIFIER paramseq
+   66 param: /* vazio */
+   67      | type SYMBOL_IDENTIFIER paramseq
 
-   67 paramseq: /* vazio */
-   68         | ',' type SYMBOL_IDENTIFIER paramseq
+   68 paramseq: /* vazio */
+   69         | ',' type SYMBOL_IDENTIFIER paramseq
 
-   69 symbol_lit_seq: value
-   70               | value symbol_lit_seq
+   70 symbol_lit_seq: value
+   71               | value symbol_lit_seq
 
-   71 type: KW_WORD
-   72     | KW_BOOL
-   73     | KW_BYTE
+   72 type: KW_WORD
+   73     | KW_BOOL
+   74     | KW_BYTE
 
 
 Terminais, com as regras onde eles aparecem
 
 SYMBOL_UNDEFINED (0) 0
-SYMBOL_LIT_INTEGER (1) 6 8 47
+SYMBOL_LIT_INTEGER (1) 6 8 48
 SYMBOL_LIT_FLOATING (2)
-SYMBOL_LIT_TRUE (3) 49
-SYMBOL_LIT_FALSE (4) 48
-SYMBOL_LIT_CHAR (5) 50
-SYMBOL_LIT_STRING (6) 51
-SYMBOL_IDENTIFIER (7) 3 4 5 6 7 16 19 20 21 22 24 25 27 28 29 44 45
-    63 64 66 68
-'$' (36) 5 29 64
-'&' (38) 28
-'(' (40) 9 27 54 55
-')' (41) 9 27 54 55
-'*' (42) 32
-'+' (43) 19 20 30
-',' (44) 43 44 53 68
-'-' (45) 31
-'/' (47) 33
-':' (58) 4 5 8 63 64
-';' (59) 4 5 6 8 12 55 63 64
-'<' (60) 35
+SYMBOL_LIT_TRUE (3) 50
+SYMBOL_LIT_FALSE (4) 49
+SYMBOL_LIT_CHAR (5) 51
+SYMBOL_LIT_STRING (6) 52
+SYMBOL_IDENTIFIER (7) 3 4 5 6 7 16 19 20 21 22 25 26 28 29 30 45 46
+    64 65 67 69
+'$' (36) 5 30 65
+'&' (38) 29
+'(' (40) 9 23 28 55 56
+')' (41) 9 23 28 55 56
+'*' (42) 33
+'+' (43) 19 20 31
+',' (44) 44 45 54 69
+'-' (45) 32
+'/' (47) 34
+':' (58) 4 5 8 64 65
+';' (59) 4 5 6 8 12 56 64 65
+'<' (60) 36
 '=' (61) 21 22
-'>' (62) 34
-'[' (91) 6 8 22 24
-']' (93) 6 8 22 24
+'>' (62) 35
+'[' (91) 6 8 22 25
+']' (93) 6 8 22 25
 '{' (123) 10
 '}' (125) 10
 error (256)
-KW_WORD (500) 71
-KW_BOOL (501) 72
-KW_BYTE (502) 73
-KW_IF (503) 54
-KW_THEN (504) 56
-KW_ELSE (505) 58
-KW_LOOP (506) 55
+KW_WORD (500) 72
+KW_BOOL (501) 73
+KW_BYTE (502) 74
+KW_IF (503) 55
+KW_THEN (504) 57
+KW_ELSE (505) 59
+KW_LOOP (506) 56
 KW_INPUT (507) 16
 KW_RETURN (508) 18
 KW_OUTPUT (509) 17
-OPERATOR_LE (510) 38
-OPERATOR_GE (511) 37
-OPERATOR_EQ (512) 36
-OPERATOR_NE (513) 41
-OPERATOR_AND (514) 40
-OPERATOR_OR (515) 39
+OPERATOR_LE (510) 39
+OPERATOR_GE (511) 38
+OPERATOR_EQ (512) 37
+OPERATOR_NE (513) 42
+OPERATOR_AND (514) 41
+OPERATOR_OR (515) 40
 NAT_FUNC (516)
 NAT_VEC (517)
 NAT_ESC (518)
@@ -185,45 +186,45 @@ index_init (55)
 func_body (56)
     à esquerda: 9, à direita: 3
 command_list (57)
-    à esquerda: 10, à direita: 9 55 59
+    à esquerda: 10, à direita: 9 56 60
 commands (58)
     à esquerda: 11 12, à direita: 10 12
 simple_command (59)
-    à esquerda: 13 14 15 16 17 18, à direita: 12 55 60
+    à esquerda: 13 14 15 16 17 18, à direita: 12 56 61
 atrib (60)
     à esquerda: 19 20 21 22, à direita: 14
 expression (61)
-    à esquerda: 23 24 25 26 27 28 29, à direita: 17 18 21 22 23 24
-    53 54 55
+    à esquerda: 23 24 25 26 27 28 29 30, à direita: 17 18 21 22 23
+    24 25 54 55 56
 op (62)
-    à esquerda: 30 31 32 33 34 35 36 37 38 39 40 41, à direita: 23
+    à esquerda: 31 32 33 34 35 36 37 38 39 40 41 42, à direita: 24
 arg (63)
-    à esquerda: 42 43 44 45 46, à direita: 27 43 44
+    à esquerda: 43 44 45 46 47, à direita: 28 44 45
 value (64)
-    à esquerda: 47 48 49 50 51, à direita: 4 5 26 43 46 63 64 69
-    70
+    à esquerda: 48 49 50 51 52, à direita: 4 5 27 44 47 64 65 70
+    71
 output_rest (65)
-    à esquerda: 52 53, à direita: 17 53
+    à esquerda: 53 54, à direita: 17 54
 flux_control (66)
-    à esquerda: 54 55, à direita: 15
+    à esquerda: 55 56, à direita: 15
 then (67)
-    à esquerda: 56, à direita: 54
+    à esquerda: 57, à direita: 55
 else (68)
-    à esquerda: 57 58, à direita: 56
+    à esquerda: 58 59, à direita: 57
 option (69)
-    à esquerda: 59 60, à direita: 56 58
+    à esquerda: 60 61, à direita: 57 59
 local_var_def_list (70)
-    à esquerda: 61 62, à direita: 9 62
+    à esquerda: 62 63, à direita: 9 63
 local_var_def (71)
-    à esquerda: 63 64, à direita: 62
+    à esquerda: 64 65, à direita: 63
 param (72)
-    à esquerda: 65 66, à direita: 9
+    à esquerda: 66 67, à direita: 9
 paramseq (73)
-    à esquerda: 67 68, à direita: 66 68
+    à esquerda: 68 69, à direita: 67 69
 symbol_lit_seq (74)
-    à esquerda: 69 70, à direita: 8 70
+    à esquerda: 70 71, à direita: 8 71
 type (75)
-    à esquerda: 71 72 73, à direita: 3 4 5 6 7 63 64 66 68
+    à esquerda: 72 73 74, à direita: 3 4 5 6 7 64 65 67 69
 
 
 estado 0
@@ -243,23 +244,23 @@ estado 0
 
 estado 1
 
-   71 type: KW_WORD .
-
-    $padrão  reduzir usando a regra 71 (type)
-
-
-estado 2
-
-   72 type: KW_BOOL .
+   72 type: KW_WORD .
 
     $padrão  reduzir usando a regra 72 (type)
 
 
-estado 3
+estado 2
 
-   73 type: KW_BYTE .
+   73 type: KW_BOOL .
 
     $padrão  reduzir usando a regra 73 (type)
+
+
+estado 3
+
+   74 type: KW_BYTE .
+
+    $padrão  reduzir usando a regra 74 (type)
 
 
 estado 4
@@ -346,7 +347,7 @@ estado 12
     KW_BOOL  deslocar, e ir ao estado 2
     KW_BYTE  deslocar, e ir ao estado 3
 
-    $padrão  reduzir usando a regra 65 (param)
+    $padrão  reduzir usando a regra 66 (param)
 
     param  ir ao estado 23
     type   ir ao estado 24
@@ -389,37 +390,37 @@ estado 15
 
 estado 16
 
-   47 value: SYMBOL_LIT_INTEGER .
-
-    $padrão  reduzir usando a regra 47 (value)
-
-
-estado 17
-
-   49 value: SYMBOL_LIT_TRUE .
-
-    $padrão  reduzir usando a regra 49 (value)
-
-
-estado 18
-
-   48 value: SYMBOL_LIT_FALSE .
+   48 value: SYMBOL_LIT_INTEGER .
 
     $padrão  reduzir usando a regra 48 (value)
 
 
-estado 19
+estado 17
 
-   50 value: SYMBOL_LIT_CHAR .
+   50 value: SYMBOL_LIT_TRUE .
 
     $padrão  reduzir usando a regra 50 (value)
 
 
-estado 20
+estado 18
 
-   51 value: SYMBOL_LIT_STRING .
+   49 value: SYMBOL_LIT_FALSE .
+
+    $padrão  reduzir usando a regra 49 (value)
+
+
+estado 19
+
+   51 value: SYMBOL_LIT_CHAR .
 
     $padrão  reduzir usando a regra 51 (value)
+
+
+estado 20
+
+   52 value: SYMBOL_LIT_STRING .
+
+    $padrão  reduzir usando a regra 52 (value)
 
 
 estado 21
@@ -446,7 +447,7 @@ estado 23
 
 estado 24
 
-   66 param: type . SYMBOL_IDENTIFIER paramseq
+   67 param: type . SYMBOL_IDENTIFIER paramseq
 
     SYMBOL_IDENTIFIER  deslocar, e ir ao estado 31
 
@@ -509,7 +510,7 @@ estado 30
     KW_BOOL  deslocar, e ir ao estado 2
     KW_BYTE  deslocar, e ir ao estado 3
 
-    $padrão  reduzir usando a regra 61 (local_var_def_list)
+    $padrão  reduzir usando a regra 62 (local_var_def_list)
 
     local_var_def_list  ir ao estado 36
     local_var_def       ir ao estado 37
@@ -518,11 +519,11 @@ estado 30
 
 estado 31
 
-   66 param: type SYMBOL_IDENTIFIER . paramseq
+   67 param: type SYMBOL_IDENTIFIER . paramseq
 
     ','  deslocar, e ir ao estado 39
 
-    $padrão  reduzir usando a regra 67 (paramseq)
+    $padrão  reduzir usando a regra 68 (paramseq)
 
     paramseq  ir ao estado 40
 
@@ -580,13 +581,13 @@ estado 36
 
 estado 37
 
-   62 local_var_def_list: local_var_def . local_var_def_list
+   63 local_var_def_list: local_var_def . local_var_def_list
 
     KW_WORD  deslocar, e ir ao estado 1
     KW_BOOL  deslocar, e ir ao estado 2
     KW_BYTE  deslocar, e ir ao estado 3
 
-    $padrão  reduzir usando a regra 61 (local_var_def_list)
+    $padrão  reduzir usando a regra 62 (local_var_def_list)
 
     local_var_def_list  ir ao estado 47
     local_var_def       ir ao estado 37
@@ -595,8 +596,8 @@ estado 37
 
 estado 38
 
-   63 local_var_def: type . SYMBOL_IDENTIFIER ':' value ';'
-   64              | type . '$' SYMBOL_IDENTIFIER ':' value ';'
+   64 local_var_def: type . SYMBOL_IDENTIFIER ':' value ';'
+   65              | type . '$' SYMBOL_IDENTIFIER ':' value ';'
 
     SYMBOL_IDENTIFIER  deslocar, e ir ao estado 48
     '$'                deslocar, e ir ao estado 49
@@ -604,7 +605,7 @@ estado 38
 
 estado 39
 
-   68 paramseq: ',' . type SYMBOL_IDENTIFIER paramseq
+   69 paramseq: ',' . type SYMBOL_IDENTIFIER paramseq
 
     KW_WORD  deslocar, e ir ao estado 1
     KW_BOOL  deslocar, e ir ao estado 2
@@ -615,9 +616,9 @@ estado 39
 
 estado 40
 
-   66 param: type SYMBOL_IDENTIFIER paramseq .
+   67 param: type SYMBOL_IDENTIFIER paramseq .
 
-    $padrão  reduzir usando a regra 66 (param)
+    $padrão  reduzir usando a regra 67 (param)
 
 
 estado 41
@@ -636,8 +637,8 @@ estado 41
 
 estado 42
 
-   69 symbol_lit_seq: value .
-   70               | value . symbol_lit_seq
+   70 symbol_lit_seq: value .
+   71               | value . symbol_lit_seq
 
     SYMBOL_LIT_INTEGER  deslocar, e ir ao estado 16
     SYMBOL_LIT_TRUE     deslocar, e ir ao estado 17
@@ -645,7 +646,7 @@ estado 42
     SYMBOL_LIT_CHAR     deslocar, e ir ao estado 19
     SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
 
-    $padrão  reduzir usando a regra 69 (symbol_lit_seq)
+    $padrão  reduzir usando a regra 70 (symbol_lit_seq)
 
     value           ir ao estado 42
     symbol_lit_seq  ir ao estado 52
@@ -695,28 +696,28 @@ estado 46
 
 estado 47
 
-   62 local_var_def_list: local_var_def local_var_def_list .
+   63 local_var_def_list: local_var_def local_var_def_list .
 
-    $padrão  reduzir usando a regra 62 (local_var_def_list)
+    $padrão  reduzir usando a regra 63 (local_var_def_list)
 
 
 estado 48
 
-   63 local_var_def: type SYMBOL_IDENTIFIER . ':' value ';'
+   64 local_var_def: type SYMBOL_IDENTIFIER . ':' value ';'
 
     ':'  deslocar, e ir ao estado 65
 
 
 estado 49
 
-   64 local_var_def: type '$' . SYMBOL_IDENTIFIER ':' value ';'
+   65 local_var_def: type '$' . SYMBOL_IDENTIFIER ':' value ';'
 
     SYMBOL_IDENTIFIER  deslocar, e ir ao estado 66
 
 
 estado 50
 
-   68 paramseq: ',' type . SYMBOL_IDENTIFIER paramseq
+   69 paramseq: ',' type . SYMBOL_IDENTIFIER paramseq
 
     SYMBOL_IDENTIFIER  deslocar, e ir ao estado 67
 
@@ -730,9 +731,9 @@ estado 51
 
 estado 52
 
-   70 symbol_lit_seq: value symbol_lit_seq .
+   71 symbol_lit_seq: value symbol_lit_seq .
 
-    $padrão  reduzir usando a regra 70 (symbol_lit_seq)
+    $padrão  reduzir usando a regra 71 (symbol_lit_seq)
 
 
 estado 53
@@ -744,14 +745,14 @@ estado 53
 
 estado 54
 
-   54 flux_control: KW_IF . '(' expression ')' then
+   55 flux_control: KW_IF . '(' expression ')' then
 
     '('  deslocar, e ir ao estado 68
 
 
 estado 55
 
-   55 flux_control: KW_LOOP . '(' simple_command ';' expression ';' simple_command ')' command_list
+   56 flux_control: KW_LOOP . '(' simple_command ';' expression ';' simple_command ')' command_list
 
     '('  deslocar, e ir ao estado 69
 
@@ -774,10 +775,11 @@ estado 57
     SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
     SYMBOL_IDENTIFIER   deslocar, e ir ao estado 71
     '$'                 deslocar, e ir ao estado 72
-    '&'                 deslocar, e ir ao estado 73
+    '('                 deslocar, e ir ao estado 73
+    '&'                 deslocar, e ir ao estado 74
 
-    expression  ir ao estado 74
-    value       ir ao estado 75
+    expression  ir ao estado 75
+    value       ir ao estado 76
 
 
 estado 58
@@ -791,10 +793,11 @@ estado 58
     SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
     SYMBOL_IDENTIFIER   deslocar, e ir ao estado 71
     '$'                 deslocar, e ir ao estado 72
-    '&'                 deslocar, e ir ao estado 73
+    '('                 deslocar, e ir ao estado 73
+    '&'                 deslocar, e ir ao estado 74
 
-    expression  ir ao estado 76
-    value       ir ao estado 75
+    expression  ir ao estado 77
+    value       ir ao estado 76
 
 
 estado 59
@@ -803,30 +806,30 @@ estado 59
    21      | SYMBOL_IDENTIFIER . '=' expression
    22      | SYMBOL_IDENTIFIER . '[' expression ']' '=' expression
 
-    '['  deslocar, e ir ao estado 77
-    '+'  deslocar, e ir ao estado 78
-    '='  deslocar, e ir ao estado 79
+    '['  deslocar, e ir ao estado 78
+    '+'  deslocar, e ir ao estado 79
+    '='  deslocar, e ir ao estado 80
 
 
 estado 60
 
    19 atrib: '+' . '+' SYMBOL_IDENTIFIER
 
-    '+'  deslocar, e ir ao estado 80
+    '+'  deslocar, e ir ao estado 81
 
 
 estado 61
 
    10 command_list: '{' commands . '}'
 
-    '}'  deslocar, e ir ao estado 81
+    '}'  deslocar, e ir ao estado 82
 
 
 estado 62
 
    12 commands: simple_command . ';' commands
 
-    ';'  deslocar, e ir ao estado 82
+    ';'  deslocar, e ir ao estado 83
 
 
 estado 63
@@ -845,7 +848,7 @@ estado 64
 
 estado 65
 
-   63 local_var_def: type SYMBOL_IDENTIFIER ':' . value ';'
+   64 local_var_def: type SYMBOL_IDENTIFIER ':' . value ';'
 
     SYMBOL_LIT_INTEGER  deslocar, e ir ao estado 16
     SYMBOL_LIT_TRUE     deslocar, e ir ao estado 17
@@ -853,30 +856,30 @@ estado 65
     SYMBOL_LIT_CHAR     deslocar, e ir ao estado 19
     SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
 
-    value  ir ao estado 83
+    value  ir ao estado 84
 
 
 estado 66
 
-   64 local_var_def: type '$' SYMBOL_IDENTIFIER . ':' value ';'
+   65 local_var_def: type '$' SYMBOL_IDENTIFIER . ':' value ';'
 
-    ':'  deslocar, e ir ao estado 84
+    ':'  deslocar, e ir ao estado 85
 
 
 estado 67
 
-   68 paramseq: ',' type SYMBOL_IDENTIFIER . paramseq
+   69 paramseq: ',' type SYMBOL_IDENTIFIER . paramseq
 
     ','  deslocar, e ir ao estado 39
 
-    $padrão  reduzir usando a regra 67 (paramseq)
+    $padrão  reduzir usando a regra 68 (paramseq)
 
-    paramseq  ir ao estado 85
+    paramseq  ir ao estado 86
 
 
 estado 68
 
-   54 flux_control: KW_IF '(' . expression ')' then
+   55 flux_control: KW_IF '(' . expression ')' then
 
     SYMBOL_LIT_INTEGER  deslocar, e ir ao estado 16
     SYMBOL_LIT_TRUE     deslocar, e ir ao estado 17
@@ -885,15 +888,16 @@ estado 68
     SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
     SYMBOL_IDENTIFIER   deslocar, e ir ao estado 71
     '$'                 deslocar, e ir ao estado 72
-    '&'                 deslocar, e ir ao estado 73
+    '('                 deslocar, e ir ao estado 73
+    '&'                 deslocar, e ir ao estado 74
 
-    expression  ir ao estado 86
-    value       ir ao estado 75
+    expression  ir ao estado 87
+    value       ir ao estado 76
 
 
 estado 69
 
-   55 flux_control: KW_LOOP '(' . simple_command ';' expression ';' simple_command ')' command_list
+   56 flux_control: KW_LOOP '(' . simple_command ';' expression ';' simple_command ')' command_list
 
     KW_IF              deslocar, e ir ao estado 54
     KW_LOOP            deslocar, e ir ao estado 55
@@ -905,7 +909,7 @@ estado 69
 
     $padrão  reduzir usando a regra 13 (simple_command)
 
-    simple_command  ir ao estado 87
+    simple_command  ir ao estado 88
     atrib           ir ao estado 63
     flux_control    ir ao estado 64
 
@@ -919,86 +923,104 @@ estado 70
 
 estado 71
 
-   24 expression: SYMBOL_IDENTIFIER . '[' expression ']'
-   25           | SYMBOL_IDENTIFIER .
-   27           | SYMBOL_IDENTIFIER . '(' arg ')'
+   25 expression: SYMBOL_IDENTIFIER . '[' expression ']'
+   26           | SYMBOL_IDENTIFIER .
+   28           | SYMBOL_IDENTIFIER . '(' arg ')'
 
-    '['  deslocar, e ir ao estado 88
-    '('  deslocar, e ir ao estado 89
-
-    $padrão  reduzir usando a regra 25 (expression)
-
-
-estado 72
-
-   29 expression: '$' . SYMBOL_IDENTIFIER
-
-    SYMBOL_IDENTIFIER  deslocar, e ir ao estado 90
-
-
-estado 73
-
-   28 expression: '&' . SYMBOL_IDENTIFIER
-
-    SYMBOL_IDENTIFIER  deslocar, e ir ao estado 91
-
-
-estado 74
-
-   18 simple_command: KW_RETURN expression .
-   23 expression: expression . op expression
-
-    OPERATOR_LE   deslocar, e ir ao estado 92
-    OPERATOR_GE   deslocar, e ir ao estado 93
-    OPERATOR_EQ   deslocar, e ir ao estado 94
-    OPERATOR_NE   deslocar, e ir ao estado 95
-    OPERATOR_AND  deslocar, e ir ao estado 96
-    OPERATOR_OR   deslocar, e ir ao estado 97
-    '+'           deslocar, e ir ao estado 98
-    '-'           deslocar, e ir ao estado 99
-    '*'           deslocar, e ir ao estado 100
-    '/'           deslocar, e ir ao estado 101
-    '>'           deslocar, e ir ao estado 102
-    '<'           deslocar, e ir ao estado 103
-
-    $padrão  reduzir usando a regra 18 (simple_command)
-
-    op  ir ao estado 104
-
-
-estado 75
-
-   26 expression: value .
+    '['  deslocar, e ir ao estado 89
+    '('  deslocar, e ir ao estado 90
 
     $padrão  reduzir usando a regra 26 (expression)
 
 
+estado 72
+
+   30 expression: '$' . SYMBOL_IDENTIFIER
+
+    SYMBOL_IDENTIFIER  deslocar, e ir ao estado 91
+
+
+estado 73
+
+   23 expression: '(' . expression ')'
+
+    SYMBOL_LIT_INTEGER  deslocar, e ir ao estado 16
+    SYMBOL_LIT_TRUE     deslocar, e ir ao estado 17
+    SYMBOL_LIT_FALSE    deslocar, e ir ao estado 18
+    SYMBOL_LIT_CHAR     deslocar, e ir ao estado 19
+    SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
+    SYMBOL_IDENTIFIER   deslocar, e ir ao estado 71
+    '$'                 deslocar, e ir ao estado 72
+    '('                 deslocar, e ir ao estado 73
+    '&'                 deslocar, e ir ao estado 74
+
+    expression  ir ao estado 92
+    value       ir ao estado 76
+
+
+estado 74
+
+   29 expression: '&' . SYMBOL_IDENTIFIER
+
+    SYMBOL_IDENTIFIER  deslocar, e ir ao estado 93
+
+
+estado 75
+
+   18 simple_command: KW_RETURN expression .
+   24 expression: expression . op expression
+
+    OPERATOR_LE   deslocar, e ir ao estado 94
+    OPERATOR_GE   deslocar, e ir ao estado 95
+    OPERATOR_EQ   deslocar, e ir ao estado 96
+    OPERATOR_NE   deslocar, e ir ao estado 97
+    OPERATOR_AND  deslocar, e ir ao estado 98
+    OPERATOR_OR   deslocar, e ir ao estado 99
+    '+'           deslocar, e ir ao estado 100
+    '-'           deslocar, e ir ao estado 101
+    '*'           deslocar, e ir ao estado 102
+    '/'           deslocar, e ir ao estado 103
+    '>'           deslocar, e ir ao estado 104
+    '<'           deslocar, e ir ao estado 105
+
+    $padrão  reduzir usando a regra 18 (simple_command)
+
+    op  ir ao estado 106
+
+
 estado 76
 
-   17 simple_command: KW_OUTPUT expression . output_rest
-   23 expression: expression . op expression
+   27 expression: value .
 
-    OPERATOR_LE   deslocar, e ir ao estado 92
-    OPERATOR_GE   deslocar, e ir ao estado 93
-    OPERATOR_EQ   deslocar, e ir ao estado 94
-    OPERATOR_NE   deslocar, e ir ao estado 95
-    OPERATOR_AND  deslocar, e ir ao estado 96
-    OPERATOR_OR   deslocar, e ir ao estado 97
-    '+'           deslocar, e ir ao estado 98
-    '-'           deslocar, e ir ao estado 99
-    '*'           deslocar, e ir ao estado 100
-    '/'           deslocar, e ir ao estado 101
-    '>'           deslocar, e ir ao estado 102
-    '<'           deslocar, e ir ao estado 103
-    ','           deslocar, e ir ao estado 105
-
-    $padrão  reduzir usando a regra 52 (output_rest)
-
-    op           ir ao estado 104
-    output_rest  ir ao estado 106
+    $padrão  reduzir usando a regra 27 (expression)
 
 
 estado 77
+
+   17 simple_command: KW_OUTPUT expression . output_rest
+   24 expression: expression . op expression
+
+    OPERATOR_LE   deslocar, e ir ao estado 94
+    OPERATOR_GE   deslocar, e ir ao estado 95
+    OPERATOR_EQ   deslocar, e ir ao estado 96
+    OPERATOR_NE   deslocar, e ir ao estado 97
+    OPERATOR_AND  deslocar, e ir ao estado 98
+    OPERATOR_OR   deslocar, e ir ao estado 99
+    '+'           deslocar, e ir ao estado 100
+    '-'           deslocar, e ir ao estado 101
+    '*'           deslocar, e ir ao estado 102
+    '/'           deslocar, e ir ao estado 103
+    '>'           deslocar, e ir ao estado 104
+    '<'           deslocar, e ir ao estado 105
+    ','           deslocar, e ir ao estado 107
+
+    $padrão  reduzir usando a regra 53 (output_rest)
+
+    op           ir ao estado 106
+    output_rest  ir ao estado 108
+
+
+estado 78
 
    22 atrib: SYMBOL_IDENTIFIER '[' . expression ']' '=' expression
 
@@ -1009,20 +1031,21 @@ estado 77
     SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
     SYMBOL_IDENTIFIER   deslocar, e ir ao estado 71
     '$'                 deslocar, e ir ao estado 72
-    '&'                 deslocar, e ir ao estado 73
+    '('                 deslocar, e ir ao estado 73
+    '&'                 deslocar, e ir ao estado 74
 
-    expression  ir ao estado 107
-    value       ir ao estado 75
-
-
-estado 78
-
-   20 atrib: SYMBOL_IDENTIFIER '+' . '+'
-
-    '+'  deslocar, e ir ao estado 108
+    expression  ir ao estado 109
+    value       ir ao estado 76
 
 
 estado 79
+
+   20 atrib: SYMBOL_IDENTIFIER '+' . '+'
+
+    '+'  deslocar, e ir ao estado 110
+
+
+estado 80
 
    21 atrib: SYMBOL_IDENTIFIER '=' . expression
 
@@ -1033,27 +1056,28 @@ estado 79
     SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
     SYMBOL_IDENTIFIER   deslocar, e ir ao estado 71
     '$'                 deslocar, e ir ao estado 72
-    '&'                 deslocar, e ir ao estado 73
+    '('                 deslocar, e ir ao estado 73
+    '&'                 deslocar, e ir ao estado 74
 
-    expression  ir ao estado 109
-    value       ir ao estado 75
-
-
-estado 80
-
-   19 atrib: '+' '+' . SYMBOL_IDENTIFIER
-
-    SYMBOL_IDENTIFIER  deslocar, e ir ao estado 110
+    expression  ir ao estado 111
+    value       ir ao estado 76
 
 
 estado 81
+
+   19 atrib: '+' '+' . SYMBOL_IDENTIFIER
+
+    SYMBOL_IDENTIFIER  deslocar, e ir ao estado 112
+
+
+estado 82
 
    10 command_list: '{' commands '}' .
 
     $padrão  reduzir usando a regra 10 (command_list)
 
 
-estado 82
+estado 83
 
    12 commands: simple_command ';' . commands
 
@@ -1068,220 +1092,226 @@ estado 82
     ';'       reduzir usando a regra 13 (simple_command)
     $padrão  reduzir usando a regra 11 (commands)
 
-    commands        ir ao estado 111
+    commands        ir ao estado 113
     simple_command  ir ao estado 62
     atrib           ir ao estado 63
     flux_control    ir ao estado 64
 
 
-estado 83
-
-   63 local_var_def: type SYMBOL_IDENTIFIER ':' value . ';'
-
-    ';'  deslocar, e ir ao estado 112
-
-
 estado 84
 
-   64 local_var_def: type '$' SYMBOL_IDENTIFIER ':' . value ';'
+   64 local_var_def: type SYMBOL_IDENTIFIER ':' value . ';'
 
-    SYMBOL_LIT_INTEGER  deslocar, e ir ao estado 16
-    SYMBOL_LIT_TRUE     deslocar, e ir ao estado 17
-    SYMBOL_LIT_FALSE    deslocar, e ir ao estado 18
-    SYMBOL_LIT_CHAR     deslocar, e ir ao estado 19
-    SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
-
-    value  ir ao estado 113
+    ';'  deslocar, e ir ao estado 114
 
 
 estado 85
 
-   68 paramseq: ',' type SYMBOL_IDENTIFIER paramseq .
+   65 local_var_def: type '$' SYMBOL_IDENTIFIER ':' . value ';'
 
-    $padrão  reduzir usando a regra 68 (paramseq)
+    SYMBOL_LIT_INTEGER  deslocar, e ir ao estado 16
+    SYMBOL_LIT_TRUE     deslocar, e ir ao estado 17
+    SYMBOL_LIT_FALSE    deslocar, e ir ao estado 18
+    SYMBOL_LIT_CHAR     deslocar, e ir ao estado 19
+    SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
+
+    value  ir ao estado 115
 
 
 estado 86
 
-   23 expression: expression . op expression
-   54 flux_control: KW_IF '(' expression . ')' then
+   69 paramseq: ',' type SYMBOL_IDENTIFIER paramseq .
 
-    OPERATOR_LE   deslocar, e ir ao estado 92
-    OPERATOR_GE   deslocar, e ir ao estado 93
-    OPERATOR_EQ   deslocar, e ir ao estado 94
-    OPERATOR_NE   deslocar, e ir ao estado 95
-    OPERATOR_AND  deslocar, e ir ao estado 96
-    OPERATOR_OR   deslocar, e ir ao estado 97
-    ')'           deslocar, e ir ao estado 114
-    '+'           deslocar, e ir ao estado 98
-    '-'           deslocar, e ir ao estado 99
-    '*'           deslocar, e ir ao estado 100
-    '/'           deslocar, e ir ao estado 101
-    '>'           deslocar, e ir ao estado 102
-    '<'           deslocar, e ir ao estado 103
-
-    op  ir ao estado 104
+    $padrão  reduzir usando a regra 69 (paramseq)
 
 
 estado 87
 
-   55 flux_control: KW_LOOP '(' simple_command . ';' expression ';' simple_command ')' command_list
+   24 expression: expression . op expression
+   55 flux_control: KW_IF '(' expression . ')' then
 
-    ';'  deslocar, e ir ao estado 115
+    OPERATOR_LE   deslocar, e ir ao estado 94
+    OPERATOR_GE   deslocar, e ir ao estado 95
+    OPERATOR_EQ   deslocar, e ir ao estado 96
+    OPERATOR_NE   deslocar, e ir ao estado 97
+    OPERATOR_AND  deslocar, e ir ao estado 98
+    OPERATOR_OR   deslocar, e ir ao estado 99
+    ')'           deslocar, e ir ao estado 116
+    '+'           deslocar, e ir ao estado 100
+    '-'           deslocar, e ir ao estado 101
+    '*'           deslocar, e ir ao estado 102
+    '/'           deslocar, e ir ao estado 103
+    '>'           deslocar, e ir ao estado 104
+    '<'           deslocar, e ir ao estado 105
+
+    op  ir ao estado 106
 
 
 estado 88
 
-   24 expression: SYMBOL_IDENTIFIER '[' . expression ']'
+   56 flux_control: KW_LOOP '(' simple_command . ';' expression ';' simple_command ')' command_list
 
-    SYMBOL_LIT_INTEGER  deslocar, e ir ao estado 16
-    SYMBOL_LIT_TRUE     deslocar, e ir ao estado 17
-    SYMBOL_LIT_FALSE    deslocar, e ir ao estado 18
-    SYMBOL_LIT_CHAR     deslocar, e ir ao estado 19
-    SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
-    SYMBOL_IDENTIFIER   deslocar, e ir ao estado 71
-    '$'                 deslocar, e ir ao estado 72
-    '&'                 deslocar, e ir ao estado 73
-
-    expression  ir ao estado 116
-    value       ir ao estado 75
+    ';'  deslocar, e ir ao estado 117
 
 
 estado 89
 
-   27 expression: SYMBOL_IDENTIFIER '(' . arg ')'
+   25 expression: SYMBOL_IDENTIFIER '[' . expression ']'
 
     SYMBOL_LIT_INTEGER  deslocar, e ir ao estado 16
     SYMBOL_LIT_TRUE     deslocar, e ir ao estado 17
     SYMBOL_LIT_FALSE    deslocar, e ir ao estado 18
     SYMBOL_LIT_CHAR     deslocar, e ir ao estado 19
     SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
-    SYMBOL_IDENTIFIER   deslocar, e ir ao estado 117
+    SYMBOL_IDENTIFIER   deslocar, e ir ao estado 71
+    '$'                 deslocar, e ir ao estado 72
+    '('                 deslocar, e ir ao estado 73
+    '&'                 deslocar, e ir ao estado 74
 
-    $padrão  reduzir usando a regra 42 (arg)
-
-    arg    ir ao estado 118
-    value  ir ao estado 119
+    expression  ir ao estado 118
+    value       ir ao estado 76
 
 
 estado 90
 
-   29 expression: '$' SYMBOL_IDENTIFIER .
+   28 expression: SYMBOL_IDENTIFIER '(' . arg ')'
 
-    $padrão  reduzir usando a regra 29 (expression)
+    SYMBOL_LIT_INTEGER  deslocar, e ir ao estado 16
+    SYMBOL_LIT_TRUE     deslocar, e ir ao estado 17
+    SYMBOL_LIT_FALSE    deslocar, e ir ao estado 18
+    SYMBOL_LIT_CHAR     deslocar, e ir ao estado 19
+    SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
+    SYMBOL_IDENTIFIER   deslocar, e ir ao estado 119
+
+    $padrão  reduzir usando a regra 43 (arg)
+
+    arg    ir ao estado 120
+    value  ir ao estado 121
 
 
 estado 91
 
-   28 expression: '&' SYMBOL_IDENTIFIER .
+   30 expression: '$' SYMBOL_IDENTIFIER .
 
-    $padrão  reduzir usando a regra 28 (expression)
+    $padrão  reduzir usando a regra 30 (expression)
 
 
 estado 92
 
-   38 op: OPERATOR_LE .
+   23 expression: '(' expression . ')'
+   24           | expression . op expression
 
-    $padrão  reduzir usando a regra 38 (op)
+    OPERATOR_LE   deslocar, e ir ao estado 94
+    OPERATOR_GE   deslocar, e ir ao estado 95
+    OPERATOR_EQ   deslocar, e ir ao estado 96
+    OPERATOR_NE   deslocar, e ir ao estado 97
+    OPERATOR_AND  deslocar, e ir ao estado 98
+    OPERATOR_OR   deslocar, e ir ao estado 99
+    ')'           deslocar, e ir ao estado 122
+    '+'           deslocar, e ir ao estado 100
+    '-'           deslocar, e ir ao estado 101
+    '*'           deslocar, e ir ao estado 102
+    '/'           deslocar, e ir ao estado 103
+    '>'           deslocar, e ir ao estado 104
+    '<'           deslocar, e ir ao estado 105
+
+    op  ir ao estado 106
 
 
 estado 93
 
-   37 op: OPERATOR_GE .
+   29 expression: '&' SYMBOL_IDENTIFIER .
 
-    $padrão  reduzir usando a regra 37 (op)
+    $padrão  reduzir usando a regra 29 (expression)
 
 
 estado 94
 
-   36 op: OPERATOR_EQ .
-
-    $padrão  reduzir usando a regra 36 (op)
-
-
-estado 95
-
-   41 op: OPERATOR_NE .
-
-    $padrão  reduzir usando a regra 41 (op)
-
-
-estado 96
-
-   40 op: OPERATOR_AND .
-
-    $padrão  reduzir usando a regra 40 (op)
-
-
-estado 97
-
-   39 op: OPERATOR_OR .
+   39 op: OPERATOR_LE .
 
     $padrão  reduzir usando a regra 39 (op)
 
 
+estado 95
+
+   38 op: OPERATOR_GE .
+
+    $padrão  reduzir usando a regra 38 (op)
+
+
+estado 96
+
+   37 op: OPERATOR_EQ .
+
+    $padrão  reduzir usando a regra 37 (op)
+
+
+estado 97
+
+   42 op: OPERATOR_NE .
+
+    $padrão  reduzir usando a regra 42 (op)
+
+
 estado 98
 
-   30 op: '+' .
+   41 op: OPERATOR_AND .
 
-    $padrão  reduzir usando a regra 30 (op)
+    $padrão  reduzir usando a regra 41 (op)
 
 
 estado 99
 
-   31 op: '-' .
+   40 op: OPERATOR_OR .
 
-    $padrão  reduzir usando a regra 31 (op)
+    $padrão  reduzir usando a regra 40 (op)
 
 
 estado 100
 
-   32 op: '*' .
+   31 op: '+' .
 
-    $padrão  reduzir usando a regra 32 (op)
+    $padrão  reduzir usando a regra 31 (op)
 
 
 estado 101
 
-   33 op: '/' .
+   32 op: '-' .
 
-    $padrão  reduzir usando a regra 33 (op)
+    $padrão  reduzir usando a regra 32 (op)
 
 
 estado 102
 
-   34 op: '>' .
+   33 op: '*' .
 
-    $padrão  reduzir usando a regra 34 (op)
+    $padrão  reduzir usando a regra 33 (op)
 
 
 estado 103
 
-   35 op: '<' .
+   34 op: '/' .
 
-    $padrão  reduzir usando a regra 35 (op)
+    $padrão  reduzir usando a regra 34 (op)
 
 
 estado 104
 
-   23 expression: expression op . expression
+   35 op: '>' .
 
-    SYMBOL_LIT_INTEGER  deslocar, e ir ao estado 16
-    SYMBOL_LIT_TRUE     deslocar, e ir ao estado 17
-    SYMBOL_LIT_FALSE    deslocar, e ir ao estado 18
-    SYMBOL_LIT_CHAR     deslocar, e ir ao estado 19
-    SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
-    SYMBOL_IDENTIFIER   deslocar, e ir ao estado 71
-    '$'                 deslocar, e ir ao estado 72
-    '&'                 deslocar, e ir ao estado 73
-
-    expression  ir ao estado 120
-    value       ir ao estado 75
+    $padrão  reduzir usando a regra 35 (op)
 
 
 estado 105
 
-   53 output_rest: ',' . expression output_rest
+   36 op: '<' .
+
+    $padrão  reduzir usando a regra 36 (op)
+
+
+estado 106
+
+   24 expression: expression op . expression
 
     SYMBOL_LIT_INTEGER  deslocar, e ir ao estado 16
     SYMBOL_LIT_TRUE     deslocar, e ir ao estado 17
@@ -1290,111 +1320,130 @@ estado 105
     SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
     SYMBOL_IDENTIFIER   deslocar, e ir ao estado 71
     '$'                 deslocar, e ir ao estado 72
-    '&'                 deslocar, e ir ao estado 73
+    '('                 deslocar, e ir ao estado 73
+    '&'                 deslocar, e ir ao estado 74
 
-    expression  ir ao estado 121
-    value       ir ao estado 75
+    expression  ir ao estado 123
+    value       ir ao estado 76
 
 
-estado 106
+estado 107
+
+   54 output_rest: ',' . expression output_rest
+
+    SYMBOL_LIT_INTEGER  deslocar, e ir ao estado 16
+    SYMBOL_LIT_TRUE     deslocar, e ir ao estado 17
+    SYMBOL_LIT_FALSE    deslocar, e ir ao estado 18
+    SYMBOL_LIT_CHAR     deslocar, e ir ao estado 19
+    SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
+    SYMBOL_IDENTIFIER   deslocar, e ir ao estado 71
+    '$'                 deslocar, e ir ao estado 72
+    '('                 deslocar, e ir ao estado 73
+    '&'                 deslocar, e ir ao estado 74
+
+    expression  ir ao estado 124
+    value       ir ao estado 76
+
+
+estado 108
 
    17 simple_command: KW_OUTPUT expression output_rest .
 
     $padrão  reduzir usando a regra 17 (simple_command)
 
 
-estado 107
+estado 109
 
    22 atrib: SYMBOL_IDENTIFIER '[' expression . ']' '=' expression
-   23 expression: expression . op expression
+   24 expression: expression . op expression
 
-    OPERATOR_LE   deslocar, e ir ao estado 92
-    OPERATOR_GE   deslocar, e ir ao estado 93
-    OPERATOR_EQ   deslocar, e ir ao estado 94
-    OPERATOR_NE   deslocar, e ir ao estado 95
-    OPERATOR_AND  deslocar, e ir ao estado 96
-    OPERATOR_OR   deslocar, e ir ao estado 97
-    ']'           deslocar, e ir ao estado 122
-    '+'           deslocar, e ir ao estado 98
-    '-'           deslocar, e ir ao estado 99
-    '*'           deslocar, e ir ao estado 100
-    '/'           deslocar, e ir ao estado 101
-    '>'           deslocar, e ir ao estado 102
-    '<'           deslocar, e ir ao estado 103
+    OPERATOR_LE   deslocar, e ir ao estado 94
+    OPERATOR_GE   deslocar, e ir ao estado 95
+    OPERATOR_EQ   deslocar, e ir ao estado 96
+    OPERATOR_NE   deslocar, e ir ao estado 97
+    OPERATOR_AND  deslocar, e ir ao estado 98
+    OPERATOR_OR   deslocar, e ir ao estado 99
+    ']'           deslocar, e ir ao estado 125
+    '+'           deslocar, e ir ao estado 100
+    '-'           deslocar, e ir ao estado 101
+    '*'           deslocar, e ir ao estado 102
+    '/'           deslocar, e ir ao estado 103
+    '>'           deslocar, e ir ao estado 104
+    '<'           deslocar, e ir ao estado 105
 
-    op  ir ao estado 104
+    op  ir ao estado 106
 
 
-estado 108
+estado 110
 
    20 atrib: SYMBOL_IDENTIFIER '+' '+' .
 
     $padrão  reduzir usando a regra 20 (atrib)
 
 
-estado 109
+estado 111
 
    21 atrib: SYMBOL_IDENTIFIER '=' expression .
-   23 expression: expression . op expression
+   24 expression: expression . op expression
 
-    OPERATOR_LE   deslocar, e ir ao estado 92
-    OPERATOR_GE   deslocar, e ir ao estado 93
-    OPERATOR_EQ   deslocar, e ir ao estado 94
-    OPERATOR_NE   deslocar, e ir ao estado 95
-    OPERATOR_AND  deslocar, e ir ao estado 96
-    OPERATOR_OR   deslocar, e ir ao estado 97
-    '+'           deslocar, e ir ao estado 98
-    '-'           deslocar, e ir ao estado 99
-    '*'           deslocar, e ir ao estado 100
-    '/'           deslocar, e ir ao estado 101
-    '>'           deslocar, e ir ao estado 102
-    '<'           deslocar, e ir ao estado 103
+    OPERATOR_LE   deslocar, e ir ao estado 94
+    OPERATOR_GE   deslocar, e ir ao estado 95
+    OPERATOR_EQ   deslocar, e ir ao estado 96
+    OPERATOR_NE   deslocar, e ir ao estado 97
+    OPERATOR_AND  deslocar, e ir ao estado 98
+    OPERATOR_OR   deslocar, e ir ao estado 99
+    '+'           deslocar, e ir ao estado 100
+    '-'           deslocar, e ir ao estado 101
+    '*'           deslocar, e ir ao estado 102
+    '/'           deslocar, e ir ao estado 103
+    '>'           deslocar, e ir ao estado 104
+    '<'           deslocar, e ir ao estado 105
 
     $padrão  reduzir usando a regra 21 (atrib)
 
-    op  ir ao estado 104
+    op  ir ao estado 106
 
 
-estado 110
+estado 112
 
    19 atrib: '+' '+' SYMBOL_IDENTIFIER .
 
     $padrão  reduzir usando a regra 19 (atrib)
 
 
-estado 111
+estado 113
 
    12 commands: simple_command ';' commands .
 
     $padrão  reduzir usando a regra 12 (commands)
 
 
-estado 112
-
-   63 local_var_def: type SYMBOL_IDENTIFIER ':' value ';' .
-
-    $padrão  reduzir usando a regra 63 (local_var_def)
-
-
-estado 113
-
-   64 local_var_def: type '$' SYMBOL_IDENTIFIER ':' value . ';'
-
-    ';'  deslocar, e ir ao estado 123
-
-
 estado 114
 
-   54 flux_control: KW_IF '(' expression ')' . then
+   64 local_var_def: type SYMBOL_IDENTIFIER ':' value ';' .
 
-    KW_THEN  deslocar, e ir ao estado 124
-
-    then  ir ao estado 125
+    $padrão  reduzir usando a regra 64 (local_var_def)
 
 
 estado 115
 
-   55 flux_control: KW_LOOP '(' simple_command ';' . expression ';' simple_command ')' command_list
+   65 local_var_def: type '$' SYMBOL_IDENTIFIER ':' value . ';'
+
+    ';'  deslocar, e ir ao estado 126
+
+
+estado 116
+
+   55 flux_control: KW_IF '(' expression ')' . then
+
+    KW_THEN  deslocar, e ir ao estado 127
+
+    then  ir ao estado 128
+
+
+estado 117
+
+   56 flux_control: KW_LOOP '(' simple_command ';' . expression ';' simple_command ')' command_list
 
     SYMBOL_LIT_INTEGER  deslocar, e ir ao estado 16
     SYMBOL_LIT_TRUE     deslocar, e ir ao estado 17
@@ -1403,138 +1452,146 @@ estado 115
     SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
     SYMBOL_IDENTIFIER   deslocar, e ir ao estado 71
     '$'                 deslocar, e ir ao estado 72
-    '&'                 deslocar, e ir ao estado 73
+    '('                 deslocar, e ir ao estado 73
+    '&'                 deslocar, e ir ao estado 74
 
-    expression  ir ao estado 126
-    value       ir ao estado 75
-
-
-estado 116
-
-   23 expression: expression . op expression
-   24           | SYMBOL_IDENTIFIER '[' expression . ']'
-
-    OPERATOR_LE   deslocar, e ir ao estado 92
-    OPERATOR_GE   deslocar, e ir ao estado 93
-    OPERATOR_EQ   deslocar, e ir ao estado 94
-    OPERATOR_NE   deslocar, e ir ao estado 95
-    OPERATOR_AND  deslocar, e ir ao estado 96
-    OPERATOR_OR   deslocar, e ir ao estado 97
-    ']'           deslocar, e ir ao estado 127
-    '+'           deslocar, e ir ao estado 98
-    '-'           deslocar, e ir ao estado 99
-    '*'           deslocar, e ir ao estado 100
-    '/'           deslocar, e ir ao estado 101
-    '>'           deslocar, e ir ao estado 102
-    '<'           deslocar, e ir ao estado 103
-
-    op  ir ao estado 104
-
-
-estado 117
-
-   44 arg: SYMBOL_IDENTIFIER . ',' arg
-   45    | SYMBOL_IDENTIFIER .
-
-    ','  deslocar, e ir ao estado 128
-
-    $padrão  reduzir usando a regra 45 (arg)
+    expression  ir ao estado 129
+    value       ir ao estado 76
 
 
 estado 118
 
-   27 expression: SYMBOL_IDENTIFIER '(' arg . ')'
+   24 expression: expression . op expression
+   25           | SYMBOL_IDENTIFIER '[' expression . ']'
 
-    ')'  deslocar, e ir ao estado 129
+    OPERATOR_LE   deslocar, e ir ao estado 94
+    OPERATOR_GE   deslocar, e ir ao estado 95
+    OPERATOR_EQ   deslocar, e ir ao estado 96
+    OPERATOR_NE   deslocar, e ir ao estado 97
+    OPERATOR_AND  deslocar, e ir ao estado 98
+    OPERATOR_OR   deslocar, e ir ao estado 99
+    ']'           deslocar, e ir ao estado 130
+    '+'           deslocar, e ir ao estado 100
+    '-'           deslocar, e ir ao estado 101
+    '*'           deslocar, e ir ao estado 102
+    '/'           deslocar, e ir ao estado 103
+    '>'           deslocar, e ir ao estado 104
+    '<'           deslocar, e ir ao estado 105
+
+    op  ir ao estado 106
 
 
 estado 119
 
-   43 arg: value . ',' arg
-   46    | value .
+   45 arg: SYMBOL_IDENTIFIER . ',' arg
+   46    | SYMBOL_IDENTIFIER .
 
-    ','  deslocar, e ir ao estado 130
+    ','  deslocar, e ir ao estado 131
 
     $padrão  reduzir usando a regra 46 (arg)
 
 
 estado 120
 
-   23 expression: expression . op expression
-   23           | expression op expression .
+   28 expression: SYMBOL_IDENTIFIER '(' arg . ')'
 
-    OPERATOR_LE   deslocar, e ir ao estado 92
-    OPERATOR_GE   deslocar, e ir ao estado 93
-    OPERATOR_EQ   deslocar, e ir ao estado 94
-    OPERATOR_NE   deslocar, e ir ao estado 95
-    OPERATOR_AND  deslocar, e ir ao estado 96
-    OPERATOR_OR   deslocar, e ir ao estado 97
-    '+'           deslocar, e ir ao estado 98
-    '-'           deslocar, e ir ao estado 99
-    '*'           deslocar, e ir ao estado 100
-    '/'           deslocar, e ir ao estado 101
-    '>'           deslocar, e ir ao estado 102
-    '<'           deslocar, e ir ao estado 103
-
-    OPERATOR_LE   [reduzir usando a regra 23 (expression)]
-    OPERATOR_GE   [reduzir usando a regra 23 (expression)]
-    OPERATOR_EQ   [reduzir usando a regra 23 (expression)]
-    OPERATOR_NE   [reduzir usando a regra 23 (expression)]
-    OPERATOR_AND  [reduzir usando a regra 23 (expression)]
-    OPERATOR_OR   [reduzir usando a regra 23 (expression)]
-    '+'           [reduzir usando a regra 23 (expression)]
-    '-'           [reduzir usando a regra 23 (expression)]
-    '*'           [reduzir usando a regra 23 (expression)]
-    '/'           [reduzir usando a regra 23 (expression)]
-    '>'           [reduzir usando a regra 23 (expression)]
-    '<'           [reduzir usando a regra 23 (expression)]
-    $padrão      reduzir usando a regra 23 (expression)
-
-    op  ir ao estado 104
+    ')'  deslocar, e ir ao estado 132
 
 
 estado 121
 
-   23 expression: expression . op expression
-   53 output_rest: ',' expression . output_rest
+   44 arg: value . ',' arg
+   47    | value .
 
-    OPERATOR_LE   deslocar, e ir ao estado 92
-    OPERATOR_GE   deslocar, e ir ao estado 93
-    OPERATOR_EQ   deslocar, e ir ao estado 94
-    OPERATOR_NE   deslocar, e ir ao estado 95
-    OPERATOR_AND  deslocar, e ir ao estado 96
-    OPERATOR_OR   deslocar, e ir ao estado 97
-    '+'           deslocar, e ir ao estado 98
-    '-'           deslocar, e ir ao estado 99
-    '*'           deslocar, e ir ao estado 100
-    '/'           deslocar, e ir ao estado 101
-    '>'           deslocar, e ir ao estado 102
-    '<'           deslocar, e ir ao estado 103
-    ','           deslocar, e ir ao estado 105
+    ','  deslocar, e ir ao estado 133
 
-    $padrão  reduzir usando a regra 52 (output_rest)
-
-    op           ir ao estado 104
-    output_rest  ir ao estado 131
+    $padrão  reduzir usando a regra 47 (arg)
 
 
 estado 122
 
-   22 atrib: SYMBOL_IDENTIFIER '[' expression ']' . '=' expression
+   23 expression: '(' expression ')' .
 
-    '='  deslocar, e ir ao estado 132
+    $padrão  reduzir usando a regra 23 (expression)
 
 
 estado 123
 
-   64 local_var_def: type '$' SYMBOL_IDENTIFIER ':' value ';' .
+   24 expression: expression . op expression
+   24           | expression op expression .
 
-    $padrão  reduzir usando a regra 64 (local_var_def)
+    OPERATOR_LE   deslocar, e ir ao estado 94
+    OPERATOR_GE   deslocar, e ir ao estado 95
+    OPERATOR_EQ   deslocar, e ir ao estado 96
+    OPERATOR_NE   deslocar, e ir ao estado 97
+    OPERATOR_AND  deslocar, e ir ao estado 98
+    OPERATOR_OR   deslocar, e ir ao estado 99
+    '+'           deslocar, e ir ao estado 100
+    '-'           deslocar, e ir ao estado 101
+    '*'           deslocar, e ir ao estado 102
+    '/'           deslocar, e ir ao estado 103
+    '>'           deslocar, e ir ao estado 104
+    '<'           deslocar, e ir ao estado 105
+
+    OPERATOR_LE   [reduzir usando a regra 24 (expression)]
+    OPERATOR_GE   [reduzir usando a regra 24 (expression)]
+    OPERATOR_EQ   [reduzir usando a regra 24 (expression)]
+    OPERATOR_NE   [reduzir usando a regra 24 (expression)]
+    OPERATOR_AND  [reduzir usando a regra 24 (expression)]
+    OPERATOR_OR   [reduzir usando a regra 24 (expression)]
+    '+'           [reduzir usando a regra 24 (expression)]
+    '-'           [reduzir usando a regra 24 (expression)]
+    '*'           [reduzir usando a regra 24 (expression)]
+    '/'           [reduzir usando a regra 24 (expression)]
+    '>'           [reduzir usando a regra 24 (expression)]
+    '<'           [reduzir usando a regra 24 (expression)]
+    $padrão      reduzir usando a regra 24 (expression)
+
+    op  ir ao estado 106
 
 
 estado 124
 
-   56 then: KW_THEN . option else
+   24 expression: expression . op expression
+   54 output_rest: ',' expression . output_rest
+
+    OPERATOR_LE   deslocar, e ir ao estado 94
+    OPERATOR_GE   deslocar, e ir ao estado 95
+    OPERATOR_EQ   deslocar, e ir ao estado 96
+    OPERATOR_NE   deslocar, e ir ao estado 97
+    OPERATOR_AND  deslocar, e ir ao estado 98
+    OPERATOR_OR   deslocar, e ir ao estado 99
+    '+'           deslocar, e ir ao estado 100
+    '-'           deslocar, e ir ao estado 101
+    '*'           deslocar, e ir ao estado 102
+    '/'           deslocar, e ir ao estado 103
+    '>'           deslocar, e ir ao estado 104
+    '<'           deslocar, e ir ao estado 105
+    ','           deslocar, e ir ao estado 107
+
+    $padrão  reduzir usando a regra 53 (output_rest)
+
+    op           ir ao estado 106
+    output_rest  ir ao estado 134
+
+
+estado 125
+
+   22 atrib: SYMBOL_IDENTIFIER '[' expression ']' . '=' expression
+
+    '='  deslocar, e ir ao estado 135
+
+
+estado 126
+
+   65 local_var_def: type '$' SYMBOL_IDENTIFIER ':' value ';' .
+
+    $padrão  reduzir usando a regra 65 (local_var_def)
+
+
+estado 127
+
+   57 then: KW_THEN . option else
 
     KW_IF              deslocar, e ir ao estado 54
     KW_LOOP            deslocar, e ir ao estado 55
@@ -1547,98 +1604,98 @@ estado 124
 
     $padrão  reduzir usando a regra 13 (simple_command)
 
-    command_list    ir ao estado 133
-    simple_command  ir ao estado 134
+    command_list    ir ao estado 136
+    simple_command  ir ao estado 137
     atrib           ir ao estado 63
     flux_control    ir ao estado 64
-    option          ir ao estado 135
-
-
-estado 125
-
-   54 flux_control: KW_IF '(' expression ')' then .
-
-    $padrão  reduzir usando a regra 54 (flux_control)
-
-
-estado 126
-
-   23 expression: expression . op expression
-   55 flux_control: KW_LOOP '(' simple_command ';' expression . ';' simple_command ')' command_list
-
-    OPERATOR_LE   deslocar, e ir ao estado 92
-    OPERATOR_GE   deslocar, e ir ao estado 93
-    OPERATOR_EQ   deslocar, e ir ao estado 94
-    OPERATOR_NE   deslocar, e ir ao estado 95
-    OPERATOR_AND  deslocar, e ir ao estado 96
-    OPERATOR_OR   deslocar, e ir ao estado 97
-    ';'           deslocar, e ir ao estado 136
-    '+'           deslocar, e ir ao estado 98
-    '-'           deslocar, e ir ao estado 99
-    '*'           deslocar, e ir ao estado 100
-    '/'           deslocar, e ir ao estado 101
-    '>'           deslocar, e ir ao estado 102
-    '<'           deslocar, e ir ao estado 103
-
-    op  ir ao estado 104
-
-
-estado 127
-
-   24 expression: SYMBOL_IDENTIFIER '[' expression ']' .
-
-    $padrão  reduzir usando a regra 24 (expression)
+    option          ir ao estado 138
 
 
 estado 128
 
-   44 arg: SYMBOL_IDENTIFIER ',' . arg
+   55 flux_control: KW_IF '(' expression ')' then .
 
-    SYMBOL_LIT_INTEGER  deslocar, e ir ao estado 16
-    SYMBOL_LIT_TRUE     deslocar, e ir ao estado 17
-    SYMBOL_LIT_FALSE    deslocar, e ir ao estado 18
-    SYMBOL_LIT_CHAR     deslocar, e ir ao estado 19
-    SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
-    SYMBOL_IDENTIFIER   deslocar, e ir ao estado 117
-
-    $padrão  reduzir usando a regra 42 (arg)
-
-    arg    ir ao estado 137
-    value  ir ao estado 119
+    $padrão  reduzir usando a regra 55 (flux_control)
 
 
 estado 129
 
-   27 expression: SYMBOL_IDENTIFIER '(' arg ')' .
+   24 expression: expression . op expression
+   56 flux_control: KW_LOOP '(' simple_command ';' expression . ';' simple_command ')' command_list
 
-    $padrão  reduzir usando a regra 27 (expression)
+    OPERATOR_LE   deslocar, e ir ao estado 94
+    OPERATOR_GE   deslocar, e ir ao estado 95
+    OPERATOR_EQ   deslocar, e ir ao estado 96
+    OPERATOR_NE   deslocar, e ir ao estado 97
+    OPERATOR_AND  deslocar, e ir ao estado 98
+    OPERATOR_OR   deslocar, e ir ao estado 99
+    ';'           deslocar, e ir ao estado 139
+    '+'           deslocar, e ir ao estado 100
+    '-'           deslocar, e ir ao estado 101
+    '*'           deslocar, e ir ao estado 102
+    '/'           deslocar, e ir ao estado 103
+    '>'           deslocar, e ir ao estado 104
+    '<'           deslocar, e ir ao estado 105
+
+    op  ir ao estado 106
 
 
 estado 130
 
-   43 arg: value ',' . arg
+   25 expression: SYMBOL_IDENTIFIER '[' expression ']' .
+
+    $padrão  reduzir usando a regra 25 (expression)
+
+
+estado 131
+
+   45 arg: SYMBOL_IDENTIFIER ',' . arg
 
     SYMBOL_LIT_INTEGER  deslocar, e ir ao estado 16
     SYMBOL_LIT_TRUE     deslocar, e ir ao estado 17
     SYMBOL_LIT_FALSE    deslocar, e ir ao estado 18
     SYMBOL_LIT_CHAR     deslocar, e ir ao estado 19
     SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
-    SYMBOL_IDENTIFIER   deslocar, e ir ao estado 117
+    SYMBOL_IDENTIFIER   deslocar, e ir ao estado 119
 
-    $padrão  reduzir usando a regra 42 (arg)
+    $padrão  reduzir usando a regra 43 (arg)
 
-    arg    ir ao estado 138
-    value  ir ao estado 119
-
-
-estado 131
-
-   53 output_rest: ',' expression output_rest .
-
-    $padrão  reduzir usando a regra 53 (output_rest)
+    arg    ir ao estado 140
+    value  ir ao estado 121
 
 
 estado 132
+
+   28 expression: SYMBOL_IDENTIFIER '(' arg ')' .
+
+    $padrão  reduzir usando a regra 28 (expression)
+
+
+estado 133
+
+   44 arg: value ',' . arg
+
+    SYMBOL_LIT_INTEGER  deslocar, e ir ao estado 16
+    SYMBOL_LIT_TRUE     deslocar, e ir ao estado 17
+    SYMBOL_LIT_FALSE    deslocar, e ir ao estado 18
+    SYMBOL_LIT_CHAR     deslocar, e ir ao estado 19
+    SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
+    SYMBOL_IDENTIFIER   deslocar, e ir ao estado 119
+
+    $padrão  reduzir usando a regra 43 (arg)
+
+    arg    ir ao estado 141
+    value  ir ao estado 121
+
+
+estado 134
+
+   54 output_rest: ',' expression output_rest .
+
+    $padrão  reduzir usando a regra 54 (output_rest)
+
+
+estado 135
 
    22 atrib: SYMBOL_IDENTIFIER '[' expression ']' '=' . expression
 
@@ -1649,41 +1706,42 @@ estado 132
     SYMBOL_LIT_STRING   deslocar, e ir ao estado 20
     SYMBOL_IDENTIFIER   deslocar, e ir ao estado 71
     '$'                 deslocar, e ir ao estado 72
-    '&'                 deslocar, e ir ao estado 73
+    '('                 deslocar, e ir ao estado 73
+    '&'                 deslocar, e ir ao estado 74
 
-    expression  ir ao estado 139
-    value       ir ao estado 75
-
-
-estado 133
-
-   59 option: command_list .
-
-    $padrão  reduzir usando a regra 59 (option)
-
-
-estado 134
-
-   60 option: simple_command .
-
-    $padrão  reduzir usando a regra 60 (option)
-
-
-estado 135
-
-   56 then: KW_THEN option . else
-
-    KW_ELSE  deslocar, e ir ao estado 140
-
-    KW_ELSE   [reduzir usando a regra 57 (else)]
-    $padrão  reduzir usando a regra 57 (else)
-
-    else  ir ao estado 141
+    expression  ir ao estado 142
+    value       ir ao estado 76
 
 
 estado 136
 
-   55 flux_control: KW_LOOP '(' simple_command ';' expression ';' . simple_command ')' command_list
+   60 option: command_list .
+
+    $padrão  reduzir usando a regra 60 (option)
+
+
+estado 137
+
+   61 option: simple_command .
+
+    $padrão  reduzir usando a regra 61 (option)
+
+
+estado 138
+
+   57 then: KW_THEN option . else
+
+    KW_ELSE  deslocar, e ir ao estado 143
+
+    KW_ELSE   [reduzir usando a regra 58 (else)]
+    $padrão  reduzir usando a regra 58 (else)
+
+    else  ir ao estado 144
+
+
+estado 139
+
+   56 flux_control: KW_LOOP '(' simple_command ';' expression ';' . simple_command ')' command_list
 
     KW_IF              deslocar, e ir ao estado 54
     KW_LOOP            deslocar, e ir ao estado 55
@@ -1695,51 +1753,51 @@ estado 136
 
     $padrão  reduzir usando a regra 13 (simple_command)
 
-    simple_command  ir ao estado 142
+    simple_command  ir ao estado 145
     atrib           ir ao estado 63
     flux_control    ir ao estado 64
 
 
-estado 137
+estado 140
 
-   44 arg: SYMBOL_IDENTIFIER ',' arg .
+   45 arg: SYMBOL_IDENTIFIER ',' arg .
+
+    $padrão  reduzir usando a regra 45 (arg)
+
+
+estado 141
+
+   44 arg: value ',' arg .
 
     $padrão  reduzir usando a regra 44 (arg)
 
 
-estado 138
-
-   43 arg: value ',' arg .
-
-    $padrão  reduzir usando a regra 43 (arg)
-
-
-estado 139
+estado 142
 
    22 atrib: SYMBOL_IDENTIFIER '[' expression ']' '=' expression .
-   23 expression: expression . op expression
+   24 expression: expression . op expression
 
-    OPERATOR_LE   deslocar, e ir ao estado 92
-    OPERATOR_GE   deslocar, e ir ao estado 93
-    OPERATOR_EQ   deslocar, e ir ao estado 94
-    OPERATOR_NE   deslocar, e ir ao estado 95
-    OPERATOR_AND  deslocar, e ir ao estado 96
-    OPERATOR_OR   deslocar, e ir ao estado 97
-    '+'           deslocar, e ir ao estado 98
-    '-'           deslocar, e ir ao estado 99
-    '*'           deslocar, e ir ao estado 100
-    '/'           deslocar, e ir ao estado 101
-    '>'           deslocar, e ir ao estado 102
-    '<'           deslocar, e ir ao estado 103
+    OPERATOR_LE   deslocar, e ir ao estado 94
+    OPERATOR_GE   deslocar, e ir ao estado 95
+    OPERATOR_EQ   deslocar, e ir ao estado 96
+    OPERATOR_NE   deslocar, e ir ao estado 97
+    OPERATOR_AND  deslocar, e ir ao estado 98
+    OPERATOR_OR   deslocar, e ir ao estado 99
+    '+'           deslocar, e ir ao estado 100
+    '-'           deslocar, e ir ao estado 101
+    '*'           deslocar, e ir ao estado 102
+    '/'           deslocar, e ir ao estado 103
+    '>'           deslocar, e ir ao estado 104
+    '<'           deslocar, e ir ao estado 105
 
     $padrão  reduzir usando a regra 22 (atrib)
 
-    op  ir ao estado 104
+    op  ir ao estado 106
 
 
-estado 140
+estado 143
 
-   58 else: KW_ELSE . option
+   59 else: KW_ELSE . option
 
     KW_IF              deslocar, e ir ao estado 54
     KW_LOOP            deslocar, e ir ao estado 55
@@ -1752,45 +1810,45 @@ estado 140
 
     $padrão  reduzir usando a regra 13 (simple_command)
 
-    command_list    ir ao estado 133
-    simple_command  ir ao estado 134
+    command_list    ir ao estado 136
+    simple_command  ir ao estado 137
     atrib           ir ao estado 63
     flux_control    ir ao estado 64
-    option          ir ao estado 143
-
-
-estado 141
-
-   56 then: KW_THEN option else .
-
-    $padrão  reduzir usando a regra 56 (then)
-
-
-estado 142
-
-   55 flux_control: KW_LOOP '(' simple_command ';' expression ';' simple_command . ')' command_list
-
-    ')'  deslocar, e ir ao estado 144
-
-
-estado 143
-
-   58 else: KW_ELSE option .
-
-    $padrão  reduzir usando a regra 58 (else)
+    option          ir ao estado 146
 
 
 estado 144
 
-   55 flux_control: KW_LOOP '(' simple_command ';' expression ';' simple_command ')' . command_list
+   57 then: KW_THEN option else .
 
-    '{'  deslocar, e ir ao estado 45
-
-    command_list  ir ao estado 145
+    $padrão  reduzir usando a regra 57 (then)
 
 
 estado 145
 
-   55 flux_control: KW_LOOP '(' simple_command ';' expression ';' simple_command ')' command_list .
+   56 flux_control: KW_LOOP '(' simple_command ';' expression ';' simple_command . ')' command_list
 
-    $padrão  reduzir usando a regra 55 (flux_control)
+    ')'  deslocar, e ir ao estado 147
+
+
+estado 146
+
+   59 else: KW_ELSE option .
+
+    $padrão  reduzir usando a regra 59 (else)
+
+
+estado 147
+
+   56 flux_control: KW_LOOP '(' simple_command ';' expression ';' simple_command ')' . command_list
+
+    '{'  deslocar, e ir ao estado 45
+
+    command_list  ir ao estado 148
+
+
+estado 148
+
+   56 flux_control: KW_LOOP '(' simple_command ';' expression ';' simple_command ')' command_list .
+
+    $padrão  reduzir usando a regra 56 (flux_control)
