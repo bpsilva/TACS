@@ -68,6 +68,8 @@ TAC* tac_tree_tac(astree_node *node)
 if(node==0)
 	return 0;
 
+TAC* aux;
+
 switch(node->type)
 	{
 		case FUNC_DEF:	
@@ -91,14 +93,23 @@ switch(node->type)
 					tac_create(TAC_ENDFUN, 0,0, 0)
 				);
 
-		case GLOBAL_VAR_DEF_INIT: 
-		return tac_unify
-			(	
-			tac_create(TAC_MOVE, 0, node->sons[2]->symbol , node->sons[1]->symbol),
-			tac_tree_tac(node->sons[3])
-			);
-			break;
+		case GLOBAL_VAR_DEF_INIT:
+
+		
+			aux = tac_unify(
+
+					tac_create(TAC_VAR_DEF, 0, 0, node->sons[1]->symbol),	
+					tac_create(TAC_MOVE, 0, node->sons[2]->symbol , node->sons[1]->symbol)
+				);
+			
+			return
+				tac_unify(
+					aux,	
+					tac_tree_tac(node->sons[3])
+				);
+		
 		case GLOBAL_VAR_DEF_PTR:
+		
 			break;
 		case GLOBAL_VAR_DEF_VEC : 
 			
