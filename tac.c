@@ -128,7 +128,7 @@ switch(node->type)
 		case GLOBAL_VAR_DEF_PTR:
 				tac_aux = tac_unify(
 
-					tac_create(TAC_VAR_DEF, 0, 0, node->sons[1]->symbol),	
+					tac_create(TAC_VAR_DEF_PTR, 0, 0, node->sons[1]->symbol),	
 					tac_create(TAC_MOVE, 0, node->sons[2]->symbol , node->sons[1]->symbol)
 				);
 			
@@ -139,15 +139,20 @@ switch(node->type)
 				);
 			break;
 		case GLOBAL_VAR_DEF_VEC : 
-			
+		
+				return tac_unify(
+
+					tac_create(TAC_VAR_DEF_VEC, 0, 0, node->sons[1]->symbol),	
+					tac_tree_tac(node->sons[3])
+				);
+
 			break;
 		case GLOBAL_VAR_DEF_VEC_INIT: 
 			
 			break;
 		case INDEX_INIT:
 			break;	
-		case EXP_ARRAY_ACCESS: 
-			break;
+		
 		case EXP_FUNC_CALL: 
 
 			break;
@@ -155,7 +160,14 @@ switch(node->type)
 
 			break;
 		case KW_RETURN: 
-			break;
+			tac_aux =  tac_tree_tac(node->sons[0]);
+			return tac_unify
+			(
+				tac_aux,
+				tac_create(TAC_RET, 0, 0, global_hash_ptr)
+			);
+			
+		
 		case KW_OUTPUT: 
 
 			break;
@@ -235,24 +247,7 @@ switch(node->type)
 		case INDEX_ATRIB : 
 	
 			break;
-		case OPERATOR_EQ : 
 
-			break;
-		case OPERATOR_LE : 
-
-			break;
-		case OPERATOR_GE : 
-
-			break;
-		case OPERATOR_OR : 
-
-			break;
-		case OPERATOR_AND : 
-
-			break;
-		case OPERATOR_NE : 
-
-			break;
 		case EXP_ADDR : 
 
 			break;
@@ -288,6 +283,7 @@ switch(node->type)
 		case KW_LOOP:
 
 			break;
+		case EXP_ARRAY_ACCESS:	
 		case EXP_ADD:
 		case EXP_SUB:
 		case EXP_MUL:
@@ -321,21 +317,27 @@ switch(node->type)
 			//scanf("%i", &i);
 			
 			global_hash_ptr = hash_create_tempvar();
+
 			switch(node->type)
 			{
 				case EXP_ADD: return tac_unify( tac_unify( tac_aux, tac_aux1) , tac_create(TAC_ADD, hash_aux1, hash_aux2, global_hash_ptr)); 
 				case EXP_SUB: return tac_unify( tac_unify( tac_aux, tac_aux1) , tac_create(TAC_SUB, hash_aux1, hash_aux2, global_hash_ptr)); 
 				case EXP_MUL: return tac_unify( tac_unify( tac_aux, tac_aux1) , tac_create(TAC_MUL, hash_aux1, hash_aux2, global_hash_ptr)); 
 				case EXP_DIV: return tac_unify( tac_unify( tac_aux, tac_aux1) , tac_create(TAC_DIV, hash_aux1, hash_aux2, global_hash_ptr)); 
-					default: return 0;
+				case OPERATOR_EQ : return tac_unify( tac_unify( tac_aux, tac_aux1) , tac_create(TAC_EQ, hash_aux1, hash_aux2, global_hash_ptr));
+				case EXP_ARRAY_ACCESS: return tac_unify( tac_unify( tac_aux, tac_aux1) , tac_create(TAC_ARRAY_AC, hash_aux1, hash_aux2, global_hash_ptr));
+				default: return 0;	
 			}
-			
-
-
+		case OPERATOR_EQ : 
+		case OPERATOR_LE : 
+		case OPERATOR_GE : 
+		case OPERATOR_OR : 
+		case OPERATOR_AND : 
+		case OPERATOR_NE : 
 		case EXP_MORE:
 		case EXP_LESS:
-		break;
 
+		break;
 	}
 
 return 0;

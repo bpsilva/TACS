@@ -63,6 +63,8 @@ extern FILE * yyin;
 
  
 %left KW_IF KW_ELSE
+%left '+' '-'
+%left '/' '*'
 
 
 

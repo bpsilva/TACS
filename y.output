@@ -805,8 +805,8 @@ State 59
    21      | SYMBOL_IDENTIFIER . '=' expression
    22      | SYMBOL_IDENTIFIER . '[' expression ']' '=' expression
 
-    '['  shift, and go to state 78
-    '+'  shift, and go to state 79
+    '+'  shift, and go to state 78
+    '['  shift, and go to state 79
     '='  shift, and go to state 80
 
 
@@ -977,8 +977,8 @@ State 75
     OPERATOR_OR   shift, and go to state 99
     '+'           shift, and go to state 100
     '-'           shift, and go to state 101
-    '*'           shift, and go to state 102
-    '/'           shift, and go to state 103
+    '/'           shift, and go to state 102
+    '*'           shift, and go to state 103
     '>'           shift, and go to state 104
     '<'           shift, and go to state 105
 
@@ -1007,8 +1007,8 @@ State 77
     OPERATOR_OR   shift, and go to state 99
     '+'           shift, and go to state 100
     '-'           shift, and go to state 101
-    '*'           shift, and go to state 102
-    '/'           shift, and go to state 103
+    '/'           shift, and go to state 102
+    '*'           shift, and go to state 103
     '>'           shift, and go to state 104
     '<'           shift, and go to state 105
     ','           shift, and go to state 107
@@ -1020,6 +1020,13 @@ State 77
 
 
 State 78
+
+   20 atrib: SYMBOL_IDENTIFIER '+' . '+'
+
+    '+'  shift, and go to state 109
+
+
+State 79
 
    22 atrib: SYMBOL_IDENTIFIER '[' . expression ']' '=' expression
 
@@ -1033,15 +1040,8 @@ State 78
     '('                 shift, and go to state 73
     '&'                 shift, and go to state 74
 
-    expression  go to state 109
+    expression  go to state 110
     value       go to state 76
-
-
-State 79
-
-   20 atrib: SYMBOL_IDENTIFIER '+' . '+'
-
-    '+'  shift, and go to state 110
 
 
 State 80
@@ -1135,11 +1135,11 @@ State 87
     OPERATOR_NE   shift, and go to state 97
     OPERATOR_AND  shift, and go to state 98
     OPERATOR_OR   shift, and go to state 99
-    ')'           shift, and go to state 116
     '+'           shift, and go to state 100
     '-'           shift, and go to state 101
-    '*'           shift, and go to state 102
-    '/'           shift, and go to state 103
+    '/'           shift, and go to state 102
+    '*'           shift, and go to state 103
+    ')'           shift, and go to state 116
     '>'           shift, and go to state 104
     '<'           shift, and go to state 105
 
@@ -1206,11 +1206,11 @@ State 92
     OPERATOR_NE   shift, and go to state 97
     OPERATOR_AND  shift, and go to state 98
     OPERATOR_OR   shift, and go to state 99
-    ')'           shift, and go to state 122
     '+'           shift, and go to state 100
     '-'           shift, and go to state 101
-    '*'           shift, and go to state 102
-    '/'           shift, and go to state 103
+    '/'           shift, and go to state 102
+    '*'           shift, and go to state 103
+    ')'           shift, and go to state 122
     '>'           shift, and go to state 104
     '<'           shift, and go to state 105
 
@@ -1282,16 +1282,16 @@ State 101
 
 State 102
 
-   33 op: '*' .
+   34 op: '/' .
 
-    $default  reduce using rule 33 (op)
+    $default  reduce using rule 34 (op)
 
 
 State 103
 
-   34 op: '/' .
+   33 op: '*' .
 
-    $default  reduce using rule 34 (op)
+    $default  reduce using rule 33 (op)
 
 
 State 104
@@ -1353,6 +1353,13 @@ State 108
 
 State 109
 
+   20 atrib: SYMBOL_IDENTIFIER '+' '+' .
+
+    $default  reduce using rule 20 (atrib)
+
+
+State 110
+
    22 atrib: SYMBOL_IDENTIFIER '[' expression . ']' '=' expression
    24 expression: expression . op expression
 
@@ -1362,22 +1369,15 @@ State 109
     OPERATOR_NE   shift, and go to state 97
     OPERATOR_AND  shift, and go to state 98
     OPERATOR_OR   shift, and go to state 99
-    ']'           shift, and go to state 125
     '+'           shift, and go to state 100
     '-'           shift, and go to state 101
-    '*'           shift, and go to state 102
-    '/'           shift, and go to state 103
+    '/'           shift, and go to state 102
+    '*'           shift, and go to state 103
+    ']'           shift, and go to state 125
     '>'           shift, and go to state 104
     '<'           shift, and go to state 105
 
     op  go to state 106
-
-
-State 110
-
-   20 atrib: SYMBOL_IDENTIFIER '+' '+' .
-
-    $default  reduce using rule 20 (atrib)
 
 
 State 111
@@ -1393,8 +1393,8 @@ State 111
     OPERATOR_OR   shift, and go to state 99
     '+'           shift, and go to state 100
     '-'           shift, and go to state 101
-    '*'           shift, and go to state 102
-    '/'           shift, and go to state 103
+    '/'           shift, and go to state 102
+    '*'           shift, and go to state 103
     '>'           shift, and go to state 104
     '<'           shift, and go to state 105
 
@@ -1469,11 +1469,11 @@ State 118
     OPERATOR_NE   shift, and go to state 97
     OPERATOR_AND  shift, and go to state 98
     OPERATOR_OR   shift, and go to state 99
-    ']'           shift, and go to state 130
     '+'           shift, and go to state 100
     '-'           shift, and go to state 101
-    '*'           shift, and go to state 102
-    '/'           shift, and go to state 103
+    '/'           shift, and go to state 102
+    '*'           shift, and go to state 103
+    ']'           shift, and go to state 130
     '>'           shift, and go to state 104
     '<'           shift, and go to state 105
 
@@ -1527,8 +1527,8 @@ State 123
     OPERATOR_OR   shift, and go to state 99
     '+'           shift, and go to state 100
     '-'           shift, and go to state 101
-    '*'           shift, and go to state 102
-    '/'           shift, and go to state 103
+    '/'           shift, and go to state 102
+    '*'           shift, and go to state 103
     '>'           shift, and go to state 104
     '<'           shift, and go to state 105
 
@@ -1540,8 +1540,8 @@ State 123
     OPERATOR_OR   [reduce using rule 24 (expression)]
     '+'           [reduce using rule 24 (expression)]
     '-'           [reduce using rule 24 (expression)]
-    '*'           [reduce using rule 24 (expression)]
     '/'           [reduce using rule 24 (expression)]
+    '*'           [reduce using rule 24 (expression)]
     '>'           [reduce using rule 24 (expression)]
     '<'           [reduce using rule 24 (expression)]
     $default      reduce using rule 24 (expression)
@@ -1562,8 +1562,8 @@ State 124
     OPERATOR_OR   shift, and go to state 99
     '+'           shift, and go to state 100
     '-'           shift, and go to state 101
-    '*'           shift, and go to state 102
-    '/'           shift, and go to state 103
+    '/'           shift, and go to state 102
+    '*'           shift, and go to state 103
     '>'           shift, and go to state 104
     '<'           shift, and go to state 105
     ','           shift, and go to state 107
@@ -1598,8 +1598,8 @@ State 127
     KW_RETURN          shift, and go to state 57
     KW_OUTPUT          shift, and go to state 58
     SYMBOL_IDENTIFIER  shift, and go to state 59
-    '{'                shift, and go to state 45
     '+'                shift, and go to state 60
+    '{'                shift, and go to state 45
 
     $default  reduce using rule 13 (simple_command)
 
@@ -1628,11 +1628,11 @@ State 129
     OPERATOR_NE   shift, and go to state 97
     OPERATOR_AND  shift, and go to state 98
     OPERATOR_OR   shift, and go to state 99
-    ';'           shift, and go to state 139
     '+'           shift, and go to state 100
     '-'           shift, and go to state 101
-    '*'           shift, and go to state 102
-    '/'           shift, and go to state 103
+    '/'           shift, and go to state 102
+    '*'           shift, and go to state 103
+    ';'           shift, and go to state 139
     '>'           shift, and go to state 104
     '<'           shift, and go to state 105
 
@@ -1784,8 +1784,8 @@ State 142
     OPERATOR_OR   shift, and go to state 99
     '+'           shift, and go to state 100
     '-'           shift, and go to state 101
-    '*'           shift, and go to state 102
-    '/'           shift, and go to state 103
+    '/'           shift, and go to state 102
+    '*'           shift, and go to state 103
     '>'           shift, and go to state 104
     '<'           shift, and go to state 105
 
@@ -1804,8 +1804,8 @@ State 143
     KW_RETURN          shift, and go to state 57
     KW_OUTPUT          shift, and go to state 58
     SYMBOL_IDENTIFIER  shift, and go to state 59
-    '{'                shift, and go to state 45
     '+'                shift, and go to state 60
+    '{'                shift, and go to state 45
 
     $default  reduce using rule 13 (simple_command)
 
