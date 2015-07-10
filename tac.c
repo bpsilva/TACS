@@ -62,14 +62,23 @@ TAC* tac_create(int instr_code, struct hash* add1, struct hash* add2, struct has
 	return tac;
 }
 
+int is_value(int type)
+{
+	return (type == SYMBOL_LIT_INTEGER || type == SYMBOL_LIT_FALSE ||type == SYMBOL_LIT_TRUE ||type == SYMBOL_LIT_CHAR ||type == SYMBOL_LIT_STRING || type == SYMBOL_IDENTIFIER );
+}
+
+struct hash* global_hash_ptr;
+
 TAC* tac_tree_tac(astree_node *node)
 {
 
 if(node==0)
 	return 0;
 
-TAC* aux;
-
+TAC* tac_aux = 0;
+TAC* tac_aux1 = 0;
+struct hash* hash_aux1 = 0;
+struct hash* hash_aux2 = 0;
 switch(node->type)
 	{
 		case FUNC_DEF:	
@@ -87,24 +96,24 @@ switch(node->type)
 
 		case FUNC_BODY:	
 
-			aux = tac_unify(
+			tac_aux = tac_unify(
 					tac_tree_tac(node->sons[0]), //param
 					tac_tree_tac(node->sons[1])	// local def
 				);
 
-			aux = tac_unify( 
-				aux,	
+			tac_aux = tac_unify( 
+				tac_aux,	
 				tac_tree_tac(node->sons[2])// command block
 				); 
 			return tac_unify(
-				aux,
+				tac_aux,
 				tac_create(TAC_ENDFUN, 0,0, 0)
 				);
 
 		case GLOBAL_VAR_DEF_INIT:
 
 		
-			aux = tac_unify(
+			tac_aux = tac_unify(
 
 					tac_create(TAC_VAR_DEF, 0, 0, node->sons[1]->symbol),	
 					tac_create(TAC_MOVE, 0, node->sons[2]->symbol , node->sons[1]->symbol)
@@ -112,12 +121,12 @@ switch(node->type)
 			
 			return
 				tac_unify(
-					aux,	
+					tac_aux,	
 					tac_tree_tac(node->sons[3])
 				);
 		
 		case GLOBAL_VAR_DEF_PTR:
-				aux = tac_unify(
+				tac_aux = tac_unify(
 
 					tac_create(TAC_VAR_DEF, 0, 0, node->sons[1]->symbol),	
 					tac_create(TAC_MOVE, 0, node->sons[2]->symbol , node->sons[1]->symbol)
@@ -125,7 +134,7 @@ switch(node->type)
 			
 			return
 				tac_unify(
-					aux,	
+					tac_aux,	
 					tac_tree_tac(node->sons[3])
 				);
 			break;
@@ -161,24 +170,24 @@ switch(node->type)
 		break;
 		case PARAM :
 
-			aux = tac_unify(
+			tac_aux = tac_unify(
 					tac_create(TAC_VAR_DEF, 0, 0, node->sons[1]->symbol),
 					tac_create(TAC_PARAM, 0, 0, node->sons[1]->symbol)
 					);
 
 			return tac_unify(
-					aux,
+					tac_aux,
 					tac_tree_tac(node->sons[2])
 					);
 
 		case PARAM_SEQ : 
-			aux = tac_unify(
+			tac_aux = tac_unify(
 					tac_create(TAC_VAR_DEF, 0, 0, node->sons[1]->symbol),
 					tac_create(TAC_PARAM, 0, 0, node->sons[1]->symbol)
 					);
 
 			return tac_unify(
-					aux,
+					tac_aux,
 					tac_tree_tac(node->sons[2])
 					);
 		case LOCAL_VAR_DEF : 
@@ -204,22 +213,23 @@ switch(node->type)
 			return tac_tree_tac(node->sons[0]);
 			
 		case CMDS :
-				
-			
-				
+
 			return tac_unify(
 				tac_tree_tac(node->sons[0]),
 				tac_tree_tac(node->sons[1])
 				);
 		case PRE_INC: 
-				printf("PREINC\n");
-				
 			return tac_create(TAC_ADD, insert("1", 0 , 0), node->sons[0]->symbol, node->sons[0]->symbol);//////////////
 			
 		case POST_INC: 
 
 			break;
 		case SIMPLE_ATRIB : 
+			tac_aux = tac_tree_tac(node->sons[1]);
+
+			return tac_unify(
+					tac_aux,
+				 	tac_create(TAC_MOVE, 0 , global_hash_ptr, node->sons[0]->symbol));
 
 			break;
 		case INDEX_ATRIB : 
@@ -279,14 +289,52 @@ switch(node->type)
 
 			break;
 		case EXP_ADD:
-			tac_create(TAC_ADD, insert("1", 0 , 0), node->sons[0]->symbol, node->sons[0]->symbol);
-		break;
 		case EXP_SUB:
 		case EXP_MUL:
 		case EXP_DIV:
+			
+			if(node->sons[0]!= 0)
+			{	
+				if(is_value(node->sons[0]->type))
+				{
+					hash_aux1 = node->sons[0]->symbol;
+				}else{
+					tac_aux = tac_tree_tac(node->sons[0]);
+					hash_aux1 = global_hash_ptr;
+				}
+			}
+
+			if(node->sons[1]!= 0)
+			{	
+				if(is_value(node->sons[1]->type))
+				{
+					hash_aux2 = node->sons[1]->symbol;
+				}else
+				{
+					tac_aux1 = tac_tree_tac(node->sons[1]);
+					hash_aux2 = global_hash_ptr;
+
+				}
+			}
+			//int i = 0;
+			//printf("DEBUG");
+			//scanf("%i", &i);
+			
+			global_hash_ptr = hash_create_tempvar();
+			switch(node->type)
+			{
+				case EXP_ADD: return tac_unify( tac_unify( tac_aux, tac_aux1) , tac_create(TAC_ADD, hash_aux1, hash_aux2, global_hash_ptr)); 
+				case EXP_SUB: return tac_unify( tac_unify( tac_aux, tac_aux1) , tac_create(TAC_SUB, hash_aux1, hash_aux2, global_hash_ptr)); 
+				case EXP_MUL: return tac_unify( tac_unify( tac_aux, tac_aux1) , tac_create(TAC_MUL, hash_aux1, hash_aux2, global_hash_ptr)); 
+				case EXP_DIV: return tac_unify( tac_unify( tac_aux, tac_aux1) , tac_create(TAC_DIV, hash_aux1, hash_aux2, global_hash_ptr)); 
+					default: return 0;
+			}
+			
+
+
 		case EXP_MORE:
 		case EXP_LESS:
-	
+		break;
 
 	}
 

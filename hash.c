@@ -6,7 +6,7 @@
 
 void initMe()
 {
-	temp_var_counter = 0;
+	temp_var_counter = 65;
 	int i;
 		for(i = 0 ; i < TAM ; i++)
 		{
@@ -69,12 +69,7 @@ struct hash* insert(char* text, int type, int line){
 return node;
 }
 
-int tempcounter()
-{
-	int i = temp_var_counter;
-	temp_var_counter++;
-	return i;
-}
+
 
 
 int genAddress(char* word)
@@ -99,7 +94,8 @@ struct hash* hash_create_tempvar()
 	text[2] = 'e';
 	text[3] = 'm';
 	text[4] = 'p';
-	text[5] = tempcounter();
+	text[5] = temp_var_counter;
+	temp_var_counter++;
 
 	return insert(text, 0, 0);
 }

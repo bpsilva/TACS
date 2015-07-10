@@ -220,10 +220,11 @@ type: 	KW_WORD		{$$ = KW_WORD;}
 
 int main(int argc, char **argv)
 {
+
 	semanticerror = 0;
 	int out;
 	astree = 0;
-
+	initMe();
 	if(argc < 3)
 	{
 		printf("****Missing parameters***\n");

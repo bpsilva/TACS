@@ -31,11 +31,14 @@ TAC* tac_tree_tac(astree_node *node);
 #define VAR_DEF_VEC 6
 #define TAC_RET	7
 #define TAC_ADD 8
+#define TAC_MUL 9
+#define TAC_SUB 10
+#define TAC_DIV 11
 /*
 #define TAC_SYMBOL	
 	
 	
-#define TAC_MUL	
+
 #define TAC_LABEL	
 
 #define TAC_IFZ	
@@ -54,8 +57,8 @@ TAC* tac_tree_tac(astree_node *node);
 #ifndef DEF_STRING_
 #define DEF_STRING_
 static char* DEF_STRING[50] = {
-		"TAC_MOVE","TAC_BEGINFUN","TAC_ENDFUN","TAC_PARAM","TAC_VAR_DEF","TAC_VAR_DEF_PTR","VAR_DEF_VEC","TAC_RET","TAC_ADD",0,
-		0,0,0,0,0,0,0,0,0,0,
+		"TAC_MOVE","TAC_BEGINFUN","TAC_ENDFUN","TAC_PARAM","TAC_VAR_DEF","TAC_VAR_DEF_PTR","VAR_DEF_VEC","TAC_RET","TAC_ADD","TAC_MUL",
+		"TAC_SUB","TAC_DIV",0,0,0,0,0,0,0,0,
 		0,0,0,0,0,0,0,0,0,0,
 		0,0,0,0,0,0,0,0,0,0,
 		0,0,0,0,0,0,0,0,0,0,
