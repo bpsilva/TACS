@@ -17,6 +17,11 @@ astree_node* astcreate(int type, struct hash *symbol,  astree_node *son0,  astre
 	newnode->sons[2] = son2;
 	newnode->sons[3] = son3;
 	
+	if(type == FUNC_DEF)
+	{
+		newnode->label_name = hash_create_label();
+	}
+
 	return newnode;
 }
 

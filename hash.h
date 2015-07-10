@@ -28,6 +28,7 @@ int param_types[20];
 };
 int ln;
 int temp_var_counter;
+int label_counter;
 struct hash *table[TAM];
 
 void print();

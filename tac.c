@@ -82,18 +82,23 @@ struct hash* hash_aux2 = 0;
 switch(node->type)
 	{
 		case FUNC_DEF:	
-			return
-		
-			tac_unify( 
+
+	return
+	tac_unify
+	(
+		tac_unify
+			(
+
 				tac_unify
 				(
-					tac_create(TAC_BEGINFUN, 0,0,node->sons[1]->symbol),
-					tac_tree_tac(node->sons[2])
-			
+					tac_create(TAC_LABEL, 0,0,node->label_name),
+					tac_create(TAC_BEGINFUN, 0,0,node->sons[1]->symbol)
 				),
-				tac_tree_tac(node->sons[3])
-			);
 
+				tac_tree_tac(node->sons[2])
+			),
+		tac_tree_tac(node->sons[3])
+	);
 		case FUNC_BODY:	
 
 			tac_aux = tac_unify(
@@ -155,9 +160,20 @@ switch(node->type)
 		
 		case EXP_FUNC_CALL: 
 
-			break;
-		case ARG_SEQ : 
+			return tac_unify
+			(
+				tac_tree_tac(node->sons[1]),
+				tac_create(TAC_JMP, 0, 0, node->sons[0]->label_name)
+			);
+			
 
+		case ARG_SEQ : 
+		
+		return tac_unify
+		(
+			tac_create(TAC_ARG, 0, 0, node->sons[0]->symbol),
+			tac_tree_tac(node->sons[1])
+		);
 			break;
 		case KW_RETURN: 
 			tac_aux =  tac_tree_tac(node->sons[0]);

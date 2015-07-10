@@ -8,7 +8,7 @@ typedef struct astree_node
 	int type;
 	struct hash *symbol;
 	struct astree_node *sons[MAX_SONS];
-
+	struct hash *label_name;
 }astree_node;
 
 astree_node* astree;

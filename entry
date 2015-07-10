@@ -1,16 +1,20 @@
 word gvar: 35;
-word $gptr: 5;
+//word $gptr: 5;
 word array[5];
 
 word foo(word p)
-word $ptr: 5;
+//word $ptr: 5;
 word lvar: 35243;
 {
-	gvar = array[3];
-	lvar = 1+gvar-5/lvar*7;
-	++gvar;
-	input lvar;
-	return gvar+lvar;
+	//gvar = array[3];
+
+
+	//gvar = foo(p);
+
+//	lvar = 1+gvar-5/lvar*7;
+//	++gvar;
+//	input lvar;
+//	return gvar+lvar;
 }
 
 

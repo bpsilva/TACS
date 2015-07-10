@@ -7,6 +7,7 @@
 void initMe()
 {
 	temp_var_counter = 65;
+	label_counter = 65;
 	int i;
 		for(i = 0 ; i < TAM ; i++)
 		{
@@ -102,8 +103,19 @@ struct hash* hash_create_tempvar()
 
 struct hash* hash_create_label()
 {
-	return 0;
+
+	char* text = (char*)malloc(sizeof(char)*6);
+	text[0] = ' ';
+	text[1] = '_';
+	text[2] = 'l';
+	text[3] = 'a';
+	text[4] = 'b';
+	text[5] = label_counter;
+	label_counter++;
+
+	return insert(text, 0, 0);
 }
+
 
 
 
