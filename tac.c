@@ -172,8 +172,7 @@ switch(node->type)
 
 			break;
 		case KW_INPUT: 
-
-			break;
+				return tac_create(TAC_INPUT, 0, 0, node->sons[0]->symbol);
 		case OUT_REST: 
 
 			break;

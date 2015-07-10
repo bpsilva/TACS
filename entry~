@@ -10,7 +10,7 @@ word lvar: 35243;
 	gvar = array[3];
 	lvar = 1+gvar-5/lvar*7;
 	++gvar;
-	return gval+lval;
+	return gvar+lvar;
 }
 
 
